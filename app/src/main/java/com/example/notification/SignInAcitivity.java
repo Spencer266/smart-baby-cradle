@@ -82,4 +82,6 @@ public class SignInAcitivity extends AppCompatActivity {
         signUp = findViewById(R.id.signUp);
         progressDialog = new ProgressDialog(this);
     }
+
+    //This is change from Mai Hoang Tung
 }
