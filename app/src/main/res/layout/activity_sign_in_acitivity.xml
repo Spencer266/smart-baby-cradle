@@ -42,14 +42,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Quên mật khẩu"/>
+            android:text="Fogot Fassword"/>
 
         <TextView
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="130dp"
-            android:text="Đăng ký"/>
+            android:text="Register"/>
     </LinearLayout>
 
 

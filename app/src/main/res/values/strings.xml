@@ -4,6 +4,7 @@
     <string name="nav_history">History</string>
     <string name="nav_account">Account</string>
     <string name="nav_profile">My Profile</string>
+    <string name="nav_change_password">Change password</string>
     <string name="nav_signOut">Sign out</string>
 
     <string name="navigation_drawer_open">Open Navigation drawer</string>

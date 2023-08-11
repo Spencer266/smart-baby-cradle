@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInAcitivity extends AppCompatActivity {
-    private TextView signUp;
+    private TextView signUp, fogot_password;
     private EditText edt_email, edt_password;
     private Button btn_sign_in;
 
@@ -30,6 +29,17 @@ public class SignInAcitivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in_acitivity);
         initUI();
         userSignUp();
+        userChangePassword();
+    }
+
+    private void userChangePassword() {
+        fogot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignInAcitivity.this, FogotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void userSignUp() {
@@ -80,6 +90,7 @@ public class SignInAcitivity extends AppCompatActivity {
         edt_password = findViewById(R.id.edt_password);
         btn_sign_in = findViewById(R.id.btn_signIn);
         signUp = findViewById(R.id.signUp);
+        fogot_password = findViewById(R.id.forgotPassword);
         progressDialog = new ProgressDialog(this);
     }
 

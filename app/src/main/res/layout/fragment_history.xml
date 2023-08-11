@@ -4,12 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#99004C"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/item_temperature"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="History"
-        android:textColor="@color/white"/>
+        android:hint="temperature"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/item_humidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="humidity"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/item_heart_beat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="heart beat"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Push 1"
+        />
+
+    <Button
+        android:id="@+id/btn_update2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Push 2"/>
 </LinearLayout>

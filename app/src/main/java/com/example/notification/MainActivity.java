@@ -19,11 +19,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.notification.fragment.Account;
+import com.example.notification.fragment.ChangePassword;
 import com.example.notification.fragment.History;
 import com.example.notification.fragment.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,15 +38,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mdrawerLayout;
-    private TextView txt;
-
     private NavigationView navigationView;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_HISTORY = 1;
+    private static final int FRAGMENT_ACCOUNT = 2;
+    private static final int FRAGMENT_CHANGE_PASSWORD = 3;
     private int currentFragment = FRAGMENT_HOME;
 
     private ImageView img_avatar;
@@ -90,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
         showUserInformation();
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -98,12 +109,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 replaceFragment(new Home());
                 currentFragment = FRAGMENT_HOME;
             }
-        } else if (id == R.id.nav_history) {
+        }
+        else if (id == R.id.nav_history) {
             if (currentFragment != FRAGMENT_HISTORY) {
                 replaceFragment(new History());
                 currentFragment = FRAGMENT_HISTORY;
             }
-        } else if(id == R.id.nav_signOut){
+
+        }
+        else if(id == R.id.nav_account){
+            if (currentFragment != FRAGMENT_ACCOUNT) {
+                replaceFragment(new Account());
+                currentFragment = FRAGMENT_ACCOUNT;
+            }
+        }
+        else if(id == R.id.nav_change_password){
+            if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
+                replaceFragment(new ChangePassword());
+                currentFragment = FRAGMENT_CHANGE_PASSWORD;
+            }
+        }
+        else if(id == R.id.nav_signOut){
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, SignInAcitivity.class);
             startActivity(intent);
