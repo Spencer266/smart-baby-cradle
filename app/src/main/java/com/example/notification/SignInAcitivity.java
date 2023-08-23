@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.core.Amplify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -60,29 +62,33 @@ public class SignInAcitivity extends AppCompatActivity {
     }
 
     private void onClickSignIn() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         progressDialog.show();
         String email = edt_email.getText().toString().trim();
         String password = edt_password.getText().toString().trim();
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(SignInAcitivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finishAffinity();
-                        } else {
-                            progressDialog.dismiss();
-                            // If sign in fails, display a message to the user.
+        Amplify.Auth.signIn(
+            email,
+            password,
+            result -> {
+                if (result.isSignedIn()) {
+                    Log.i("SignIn", "Sign in successfully with email: " + result);
+                    progressDialog.dismiss();
+                    // Sign in success, update UI with the signed-in user's information
+                    Intent intent = new Intent(SignInAcitivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finishAffinity();
+                } else {
+                    Log.i("SignIn", "Sign in unsuccessfully: " + result);
+                    progressDialog.dismiss();
+                    // If sign in fails, display a message to the user.
 
-                            Toast.makeText(SignInAcitivity.this, "Đăng nhập thất bại. " + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    Toast.makeText(SignInAcitivity.this, "Đăng nhập thất bại. ",
+                            Toast.LENGTH_SHORT).show();
+                }
+            },
+            error -> {
+                Log.e("SignIn", "Error while signing in: " + error);
+            }
+        );
     }
 
     private void initUI(){

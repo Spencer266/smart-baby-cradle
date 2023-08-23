@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
+import com.amplifyframework.core.Amplify;
 import com.bumptech.glide.Glide;
 import com.example.notification.fragment.Account;
 import com.example.notification.fragment.ChangePassword;
@@ -61,40 +64,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        txt = findViewById(R.id.getData);
-//    // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("firstName");
-//    // Write data
-//    //    myRef.setValue("Mai Hoang Tung");
-//
-//    // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                txt.setText(value);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
         initial();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mdrawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        mdrawerLayout.addDrawerListener(toogle);
-        toogle.syncState();
-
-
+        mdrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         replaceFragment(new Home());
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
@@ -163,23 +142,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public void showUserInformation(){
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if(user == null){
-                return;
-            }
-            else{
-                String name = user.getDisplayName();
-                String email = user.getEmail();
-                Uri image = user.getPhotoUrl();
-                if(name == null){
-                    txt_name.setVisibility(View.GONE);
-                }
-                else{
-                    txt_name.setVisibility(View.VISIBLE);
-                    txt_name.setText(name);
-                }
-                txt_email.setText(email);
-                Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(img_avatar);
-            }
+            Amplify.Auth.fetchAuthSession(
+                    result -> {
+                        AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
+                        switch (cognitoAuthSession.getIdentityIdResult().getType()) {
+                            case SUCCESS: {
+                                Log.i(
+                                        "getUserInformation",
+                                        "Successfully retrieved data!"
+                                );
+                                break;
+                            }
+                            case FAILURE: {
+                                Log.i(
+                                        "getUserInformation",
+                                        "Unsuccessfully retrieved data!"
+                                );
+                                break;
+                            }
+                        }
+                    },
+                    error -> {
+                        Log.e(
+                                "getUserInformation",
+                                "Error while fetching userdata: " + error
+                        );
+                    }
+            );
         }
     }

@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.options.AuthSignUpOptions;
+import com.amplifyframework.core.Amplify;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,33 +41,35 @@ public class SignUp extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
                 progressDialog.show();
 
                 if(passwordAddress.getText().toString().equals(rePasswordAddress.getText().toString())){
                     String email = emailAddress.getText().toString().trim();
                     String password = passwordAddress.getText().toString().trim();
-                    auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        progressDialog.dismiss();
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finishAffinity();
-                                    } else {
-                                        progressDialog.dismiss();
-                                        // If sign in fails, display a message to the user.
 
-                                        Toast.makeText(SignUp.this, "Đăng ký thất bại. " + task.getException().getMessage(),
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    AuthSignUpOptions options = AuthSignUpOptions.builder()
+                            .userAttribute(AuthUserAttributeKey.email(), email)
+                            .build();
+                    Amplify.Auth.signUp(email, password, options,
+                            result -> {
+                                Log.i("SignUp", "Sign Up successfully: " + result);
+                                progressDialog.dismiss();
+                                // Sign in success, update UI with the signed-in user's information
+                                Intent intent = new Intent(SignUp.this, MainActivity.class);
+                                startActivity(intent);
+                                finishAffinity();
+                            },
+                            error -> {
+                                Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
+                                progressDialog.dismiss();
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                    );
                 }
-                else{
+                else {
+                    Log.i("SignUp", "Sign Up Unsuccessfully: Passwords do not match!");
                     Toast.makeText(SignUp.this, "Mật khẩu không khớp" , Toast.LENGTH_SHORT).show();
                 }
             }

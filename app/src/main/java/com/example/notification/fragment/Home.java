@@ -41,8 +41,6 @@ public class Home extends Fragment {
     private Button btn_update;
     private TextView temperature, humidity, heart_beat;
     private Button btn_show, btn_test;
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore fStore;
     private String userID;
     @Nullable
     @Override
@@ -151,8 +149,7 @@ public class Home extends Fragment {
 //        temperature = mView.findViewById(R.id.show_temperature);
 //        humidity = mView.findViewById(R.id.show_humidity);
 //        heart_beat = mView.findViewById(R.id.show_heart_beat);
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
+
         userID = fAuth.getCurrentUser().getUid();
         btn_show = mView.findViewById(R.id.btn_show);
     }
