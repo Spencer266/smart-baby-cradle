@@ -1,6 +1,5 @@
 package com.example.notification;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -15,11 +14,6 @@ import android.widget.Toast;
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SignUp extends AppCompatActivity {
 
@@ -29,6 +23,7 @@ public class SignUp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("SignUp", "Calling onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
@@ -38,6 +33,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void userSignup() {
+        Log.i("SignUp", "Calling userSignup");
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,24 +44,24 @@ public class SignUp extends AppCompatActivity {
                     String password = passwordAddress.getText().toString().trim();
 
                     AuthSignUpOptions options = AuthSignUpOptions.builder()
-                            .userAttribute(AuthUserAttributeKey.email(), email)
-                            .build();
+                        .userAttribute(AuthUserAttributeKey.email(), email)
+                        .build();
                     Amplify.Auth.signUp(email, password, options,
-                            result -> {
-                                Log.i("SignUp", "Sign Up successfully: " + result);
-                                progressDialog.dismiss();
-                                // Sign in success, update UI with the signed-in user's information
-                                Intent intent = new Intent(SignUp.this, MainActivity.class);
-                                startActivity(intent);
-                                finishAffinity();
-                            },
-                            error -> {
-                                Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
-                                progressDialog.dismiss();
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                        result -> {
+                            Log.i("SignUp", "Sign Up successfully: " + result);
+                            progressDialog.dismiss();
+                            // Sign in success, update UI with the signed-in user's information
+                            Intent intent = new Intent(SignUp.this, MainActivity.class);
+                            startActivity(intent);
+                            finishAffinity();
+                        },
+                        error -> {
+                            Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
+                            progressDialog.dismiss();
+                            // If sign in fails, display a message to the user.
+//                            Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
+//                                    Toast.LENGTH_SHORT).show();
+                        }
                     );
                 }
                 else {
@@ -77,6 +73,8 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void initial() {
+        Log.i("SignUp", "Calling initial");
+
         emailAddress = findViewById(R.id.emailAddress);
         passwordAddress = findViewById(R.id.passwordTxt);
         rePasswordAddress = findViewById(R.id.rePasswordTxt);

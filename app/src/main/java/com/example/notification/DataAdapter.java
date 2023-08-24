@@ -1,6 +1,7 @@
 package com.example.notification;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,16 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder
     @NonNull
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.i("DataAdapter", "Calling DataViewHolder");
+
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_data, parent, false);
         return new DataViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Log.i("DataAdapter", "Calling onBindViewHolder");
+
         DataItem currentItem = dataItems.get(position);
 
         holder.temperatureTextView.setText("Temperature: " + currentItem.getTemperature() + " °C");
@@ -76,6 +81,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder
         }
 
         public void showDetails() {
+            Log.i("DataViewHolder", "Calling showDetails");
+
             // Hiển thị dữ liệu chi tiết (nếu có)
             temperatureTextView.setVisibility(View.VISIBLE);
             humidityTextView.setVisibility(View.VISIBLE);
@@ -83,6 +90,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.DataViewHolder
         }
 
         public void hideDetails() {
+            Log.i("DataViewHolder", "Calling hideDetails");
             // Ẩn dữ liệu chi tiết (nếu có)
             temperatureTextView.setVisibility(View.GONE);
             humidityTextView.setVisibility(View.GONE);

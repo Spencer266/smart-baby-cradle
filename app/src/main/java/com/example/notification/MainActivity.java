@@ -10,43 +10,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.core.Amplify;
-import com.bumptech.glide.Glide;
 import com.example.notification.fragment.Account;
-import com.example.notification.fragment.ChangePassword;
+import com.example.notification.fragment.PasswordManager;
 import com.example.notification.fragment.History;
 import com.example.notification.fragment.Home;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mdrawerLayout;
@@ -62,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MainActivity", "Calling onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -104,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.nav_change_password){
             if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
-                replaceFragment(new ChangePassword());
+                replaceFragment(new PasswordManager());
                 currentFragment = FRAGMENT_CHANGE_PASSWORD;
             }
         }
         else if(id == R.id.nav_signOut){
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, SignInAcitivity.class);
+            Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             finish();
         }
@@ -121,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         public void onBackPressed () {
+            Log.i("MainActivity", "Calling onBackPressed");
+
             if (mdrawerLayout.isDrawerOpen(GravityCompat.START)) {
                 mdrawerLayout.closeDrawer(GravityCompat.START);
             } else {
@@ -129,11 +110,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public void replaceFragment (Fragment fragment){
+            Log.i("MainActivity", "Calling replaceFragment");
+
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.content_frame, fragment);
             transaction.commit();
         }
         public void initial(){
+            Log.i("MainActivity", "Calling initial");
+
             navigationView = findViewById(R.id.navigation_view);
             navigationView.setNavigationItemSelectedListener(this);
             img_avatar = navigationView.getHeaderView(0).findViewById(R.id.image_avatar);
@@ -142,32 +127,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         public void showUserInformation(){
+            Log.i("MainActivity", "Calling showUserInformation");
+
             Amplify.Auth.fetchAuthSession(
-                    result -> {
-                        AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
-                        switch (cognitoAuthSession.getIdentityIdResult().getType()) {
-                            case SUCCESS: {
-                                Log.i(
-                                        "getUserInformation",
-                                        "Successfully retrieved data!"
-                                );
-                                break;
-                            }
-                            case FAILURE: {
-                                Log.i(
-                                        "getUserInformation",
-                                        "Unsuccessfully retrieved data!"
-                                );
-                                break;
-                            }
-                        }
-                    },
-                    error -> {
-                        Log.e(
+                result -> {
+                    AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
+                    switch (cognitoAuthSession.getIdentityIdResult().getType()) {
+                        case SUCCESS: {
+                            Log.i(
                                 "getUserInformation",
-                                "Error while fetching userdata: " + error
-                        );
+                                "Successfully retrieved data!"
+                            );
+                            break;
+                        }
+                        case FAILURE: {
+                            Log.i(
+                                "getUserInformation",
+                                "Unsuccessfully retrieved data!"
+                            );
+                            break;
+                        }
                     }
+                },
+                error -> {
+                    Log.e(
+                        "getUserInformation",
+                        "Error while fetching userdata: " + error
+                    );
+                }
             );
         }
     }
