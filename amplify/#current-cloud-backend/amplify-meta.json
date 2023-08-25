@@ -1,0 +1,56 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-smartgradle-dev-111801-authRole",
+      "UnauthRoleArn": "arn:aws:iam::855454787617:role/amplify-smartgradle-dev-111801-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::855454787617:role/amplify-smartgradle-dev-111801-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-smartgradle-dev-111801-deployment",
+      "UnauthRoleName": "amplify-smartgradle-dev-111801-unauthRole",
+      "StackName": "amplify-smartgradle-dev-111801",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:855454787617:stack/amplify-smartgradle-dev-111801/0e64bb20-416c-11ee-84f8-06848345d0d0",
+      "AmplifyAppId": "d2eoe0urf7gzh4"
+    }
+  },
+  "auth": {
+    "smartgradle4672367b": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/auth/smartgradle4672367b-cloudformation-template.json",
+        "logicalId": "authsmartgradle4672367b"
+      },
+      "lastPushTimeStamp": "2023-08-23T10:39:11.095Z",
+      "output": {
+        "UserPoolId": "ap-northeast-2_tuzrakCQd",
+        "AppClientIDWeb": "4l921cnkg4vkkffcocqm0fnk8l",
+        "AppClientID": "54gp1dlc6jvohud3lfpn3ebvoq",
+        "IdentityPoolId": "ap-northeast-2:6115979d-fbea-4ccd-adbd-f206e94481e1",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-northeast-2:855454787617:userpool/ap-northeast-2_tuzrakCQd",
+        "IdentityPoolName": "smartgradle4672367b_identitypool_4672367b__dev",
+        "UserPoolName": "smartgradle4672367b_userpool_4672367b"
+      },
+      "lastPushDirHash": "g4KKS+g0eOVT7R8wijD7lhBCyF4="
+    }
+  }
+}
