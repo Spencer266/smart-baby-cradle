@@ -19,14 +19,14 @@ import com.example.notification.R;
 public class PasswordManager extends Fragment {
     private View mView;
     private TextView currentPassword_edt, newPassword_edt, confirmPassword_edt;
-    private Button btn_change_password;
+    private Button changePasswordButton;
     @Nullable
     @Override
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_change_password, container, false);
         initUI();
-        btn_change_password.setOnClickListener(new View.OnClickListener() {
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changePassword();
@@ -84,9 +84,9 @@ public class PasswordManager extends Fragment {
     }
 
     private void initUI() {
-        currentPassword_edt = mView.findViewById(R.id.Current_Password);
-        newPassword_edt = mView.findViewById(R.id.New_password);
-        confirmPassword_edt = mView.findViewById(R.id.confirm_password);
-        btn_change_password = mView.findViewById(R.id.btn_change_password);
+        currentPassword_edt = mView.findViewById(R.id.PasswordManager_currentPassword);
+        newPassword_edt = mView.findViewById(R.id.PasswordManager_newPassword);
+        confirmPassword_edt = mView.findViewById(R.id.PasswordManager_confirmPassword);
+        changePasswordButton = mView.findViewById(R.id.PasswordManager_changePasswordButton);
     }
 }

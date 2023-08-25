@@ -17,7 +17,7 @@ import com.amplifyframework.core.Amplify;
 
 public class SignUp extends AppCompatActivity {
 
-    private EditText emailAddress, passwordAddress, rePasswordAddress;
+    private EditText userEmail, userPassword, userConfirmPassword;
     private Button signUp;
     private ProgressDialog progressDialog;
 
@@ -27,8 +27,7 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        initial();
-
+        initUI();
         userSignup();
     }
 
@@ -39,9 +38,9 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 progressDialog.show();
 
-                if(passwordAddress.getText().toString().equals(rePasswordAddress.getText().toString())){
-                    String email = emailAddress.getText().toString().trim();
-                    String password = passwordAddress.getText().toString().trim();
+                if(userPassword.getText().toString().equals(userConfirmPassword.getText().toString())){
+                    String email = userEmail.getText().toString().trim();
+                    String password = userPassword.getText().toString().trim();
 
                     AuthSignUpOptions options = AuthSignUpOptions.builder()
                         .userAttribute(AuthUserAttributeKey.email(), email)
@@ -51,15 +50,15 @@ public class SignUp extends AppCompatActivity {
                             Log.i("SignUp", "Sign Up successfully: " + result);
                             progressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(SignUp.this, MainActivity.class);
+                            Intent intent = new Intent(SignUp.this, VerifyActivity.class);
                             startActivity(intent);
                             finishAffinity();
                         },
                         error -> {
                             Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
                             progressDialog.dismiss();
-                            // If sign in fails, display a message to the user.
-//                            Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
+//                          If sign in fails, display a message to the user.
+//                          Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
 //                                    Toast.LENGTH_SHORT).show();
                         }
                     );
@@ -72,13 +71,13 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    private void initial() {
+    private void initUI() {
         Log.i("SignUp", "Calling initial");
 
-        emailAddress = findViewById(R.id.emailAddress);
-        passwordAddress = findViewById(R.id.passwordTxt);
-        rePasswordAddress = findViewById(R.id.rePasswordTxt);
-        signUp = findViewById(R.id.takeSigup);
+        userEmail = findViewById(R.id.SignUp_userEmail);
+        userPassword = findViewById(R.id.SignUp_userPassword);
+        userConfirmPassword = findViewById(R.id.SignUp_userConfirmPassword);
+        signUp = findViewById(R.id.SignUp_signUpButton);
         progressDialog = new ProgressDialog(this);
     }
 }

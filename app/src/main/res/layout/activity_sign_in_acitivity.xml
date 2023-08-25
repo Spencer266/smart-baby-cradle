@@ -7,10 +7,10 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="center"
-    tools:context=".SignInAcitivity">
+    tools:context=".SignInActivity">
 
     <EditText
-        android:id="@+id/edt_email"
+        android:id="@+id/SignInActivity_userEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -18,7 +18,7 @@
         android:inputType="textEmailAddress"
         />
     <EditText
-        android:id="@+id/edt_password"
+        android:id="@+id/SignInActivity_userPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
@@ -26,7 +26,7 @@
         android:imeOptions="actionDone"
         />
     <Button
-        android:id="@+id/btn_signIn"
+        android:id="@+id/SignInActivity_signInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign In"
@@ -38,21 +38,18 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/forgotPassword"
+            android:id="@+id/SignInActivity_forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Fogot Fassword"/>
+            android:text="Forgot Password"/>
 
         <TextView
-            android:id="@+id/signUp"
+            android:id="@+id/SignInActivity_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="130dp"
             android:text="Register"/>
     </LinearLayout>
-
-
-
 
 </LinearLayout>

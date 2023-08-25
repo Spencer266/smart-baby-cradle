@@ -10,7 +10,7 @@
     tools:context=".SignUp">
 
     <EditText
-        android:id="@+id/emailAddress"
+        android:id="@+id/SignUp_userEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -18,7 +18,7 @@
         android:inputType="textEmailAddress"
         />
     <EditText
-        android:id="@+id/passwordTxt"
+        android:id="@+id/SignUp_userPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mật khẩu"
@@ -27,7 +27,7 @@
         />
 
     <EditText
-        android:id="@+id/rePasswordTxt"
+        android:id="@+id/SignUp_userConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nhập lại mật khẩu"
@@ -36,14 +36,10 @@
         />
 
     <Button
-        android:id="@+id/takeSigup"
+        android:id="@+id/SignUp_signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Đăng ký"
         android:layout_marginTop="30dp"/>
-
-
-
-
 
 </LinearLayout>

@@ -39,6 +39,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void nextActivity() {
         Log.i("SplashActivity", "Calling nextActivity");
+
         Amplify.Auth.fetchAuthSession(
             result -> {
                 AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;

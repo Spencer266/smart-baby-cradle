@@ -40,10 +40,10 @@ public class History extends Fragment {
     }
 
     private void init() {
-        temperature = mView.findViewById(R.id.item_temperature);
-        humidity = mView.findViewById(R.id.item_humidity);
-        heart_beat = mView.findViewById(R.id.item_heart_beat);
-        btn_push = mView.findViewById(R.id.btn_update);
-        btn_push2 = mView.findViewById(R.id.btn_update2);
+        temperature = mView.findViewById(R.id.History_itemHeartBeat);
+        humidity = mView.findViewById(R.id.History_itemHumidity);
+        heart_beat = mView.findViewById(R.id.History_itemHeartBeat);
+        btn_push = mView.findViewById(R.id.History_pushButton1);
+        btn_push2 = mView.findViewById(R.id.History_pushButton2);
     }
 }

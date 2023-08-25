@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.amplifyframework.core.Amplify;
 
 public class SignInActivity extends AppCompatActivity {
-    private TextView signUp, forgot_password;
-    private EditText edt_email, edt_password;
-    private Button btn_sign_in;
+    private TextView signUp, forgotPassword;
+    private EditText userEmail, userPassword;
+    private Button signInButton;
 
     private ProgressDialog progressDialog;
     @Override
@@ -34,7 +34,7 @@ public class SignInActivity extends AppCompatActivity {
     private void userChangePassword() {
         Log.i("SignInActivity", "Calling userChangePassword");
 
-        forgot_password.setOnClickListener(new View.OnClickListener() {
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignInActivity.this, ForgotPasswordActivity.class);
@@ -53,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        btn_sign_in.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickSignIn();
@@ -65,8 +65,8 @@ public class SignInActivity extends AppCompatActivity {
         Log.i("signInActivity", "Calling onClickSignIn");
 
         progressDialog.show();
-        String email = edt_email.getText().toString().trim();
-        String password = edt_password.getText().toString().trim();
+        String email = userEmail.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
         Amplify.Auth.signIn(
             email,
             password,
@@ -92,14 +92,14 @@ public class SignInActivity extends AppCompatActivity {
         );
     }
 
-    private void initUI(){
-        Log.i("SignInActivity", "Init UI");
+    private void initUI() {
+        Log.i("SignInActivity", "Calling Init UI");
 
-        edt_email = findViewById(R.id.edt_email);
-        edt_password = findViewById(R.id.edt_password);
-        btn_sign_in = findViewById(R.id.btn_signIn);
-        signUp = findViewById(R.id.signUp);
-        forgot_password = findViewById(R.id.forgotPassword);
+        userEmail = findViewById(R.id.SignInActivity_userEmail);
+        userPassword = findViewById(R.id.SignInActivity_userPassword);
+        signInButton = findViewById(R.id.SignInActivity_signInButton);
+        signUp = findViewById(R.id.SignInActivity_signUp);
+        forgotPassword = findViewById(R.id.SignInActivity_forgotPassword);
         progressDialog = new ProgressDialog(this);
     }
 

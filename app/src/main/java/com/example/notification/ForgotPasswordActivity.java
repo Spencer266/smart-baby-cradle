@@ -6,25 +6,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.amplifyframework.core.Amplify;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    private TextView str_email;
-    private Button btn_new_password;
+    private EditText editEmail;
+    private Button resetButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("ForgotPasswordActivity", "Calling onCreate");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fogot_password);
+        setContentView(R.layout.activity_forgot_password);
         uiInit();
-        btn_new_password.setOnClickListener(new View.OnClickListener() {
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailAddress = str_email.getText().toString().trim();
+                String emailAddress = editEmail.getText().toString().trim();
 
                 Amplify.Auth.resetPassword(
                         "username",
@@ -38,7 +39,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void uiInit() {
         Log.i("ForgotPasswordActivity", "Calling uiInit");
 
-        str_email = findViewById(R.id.str_email);
-        btn_new_password = findViewById(R.id.btn_new_password);
+        editEmail = findViewById(R.id.ForgotPassword_editEmail);
+        resetButton = findViewById(R.id.ForgotPassword_resetButton);
     }
 }

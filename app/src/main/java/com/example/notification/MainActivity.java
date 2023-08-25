@@ -24,7 +24,6 @@ import com.example.notification.fragment.PasswordManager;
 import com.example.notification.fragment.History;
 import com.example.notification.fragment.Home;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mdrawerLayout;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initial();
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.MainActivity_toolbar);
         setSupportActionBar(toolbar);
         mdrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar,
@@ -61,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Log.i("MainActivity", "Calling onNavigationItemSelected");
         int id = item.getItemId();
+        Log.i("MainActivity", "Choosing item: " + id);
         if (id == R.id.nav_home) {
             if (currentFragment != FRAGMENT_HOME) {
                 replaceFragment(new Home());
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 replaceFragment(new History());
                 currentFragment = FRAGMENT_HISTORY;
             }
-
         }
         else if(id == R.id.nav_account){
             if (currentFragment != FRAGMENT_ACCOUNT) {
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         else if(id == R.id.nav_signOut){
-            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             finish();
@@ -113,13 +112,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.i("MainActivity", "Calling replaceFragment");
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_frame, fragment);
+            transaction.replace(R.id.MainActivity_toolbar, fragment);
             transaction.commit();
         }
         public void initial(){
             Log.i("MainActivity", "Calling initial");
 
-            navigationView = findViewById(R.id.navigation_view);
+            navigationView = findViewById(R.id.MainActivity_navigationView);
             navigationView.setNavigationItemSelectedListener(this);
             img_avatar = navigationView.getHeaderView(0).findViewById(R.id.image_avatar);
             txt_name = navigationView.getHeaderView(0).findViewById(R.id.txt_name);

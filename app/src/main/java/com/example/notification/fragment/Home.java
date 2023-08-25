@@ -158,7 +158,7 @@ public class Home extends Fragment {
             },
                 error -> Log.e("AuthFetch", "Failed to retrieve current user data!")
         );
-        btn_show = mView.findViewById(R.id.btn_show);
+        btn_show = mView.findViewById(R.id.Home_showButton);
     }
 
 }

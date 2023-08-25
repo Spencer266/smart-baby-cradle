@@ -7,35 +7,35 @@
     android:gravity="center">
 
     <EditText
-        android:id="@+id/item_temperature"
+        android:id="@+id/History_itemTemperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="temperature"
         android:inputType="number"/>
 
     <EditText
-        android:id="@+id/item_humidity"
+        android:id="@+id/History_itemHumidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="humidity"
         android:inputType="number"/>
 
     <EditText
-        android:id="@+id/item_heart_beat"
+        android:id="@+id/History_itemHeartBeat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="heart beat"
         android:inputType="number"/>
 
     <Button
-        android:id="@+id/btn_update"
+        android:id="@+id/History_pushButton1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Push 1"
         />
 
     <Button
-        android:id="@+id/btn_update2"
+        android:id="@+id/History_pushButton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Push 2"/>
