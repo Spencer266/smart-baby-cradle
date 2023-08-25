@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,31 +33,22 @@ public class SignInActivity extends AppCompatActivity {
     private void userChangePassword() {
         Log.i("SignInActivity", "Calling userChangePassword");
 
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignInActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
+        forgotPassword.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
     private void userSignUp() {
         Log.i("SignInActivity", "Calling userSignUp");
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignInActivity.this, SignUp.class);
-                startActivity(intent);
-            }
+        signUp.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInActivity.this, SignUp.class);
+            startActivity(intent);
+            finish();
         });
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSignIn();
-            }
-        });
+        signInButton.setOnClickListener(view -> onClickSignIn());
     }
 
     private void onClickSignIn() {
@@ -77,7 +67,7 @@ public class SignInActivity extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
-                    finishAffinity();
+                    finish();
                 } else {
                     Log.i("SignIn", "Sign in unsuccessfully: " + result);
                     progressDialog.dismiss();
@@ -93,7 +83,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Log.i("SignInActivity", "Calling Init UI");
+        Log.i("SignInActivity", "Calling InitUI");
 
         userEmail = findViewById(R.id.SignInActivity_userEmail);
         userPassword = findViewById(R.id.SignInActivity_userPassword);
@@ -102,6 +92,4 @@ public class SignInActivity extends AppCompatActivity {
         forgotPassword = findViewById(R.id.SignInActivity_forgotPassword);
         progressDialog = new ProgressDialog(this);
     }
-
-    //This is change from Mai Hoang Tung
 }

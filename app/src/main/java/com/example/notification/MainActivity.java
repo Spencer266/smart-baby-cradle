@@ -26,7 +26,7 @@ import com.example.notification.fragment.Home;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout mdrawerLayout;
+    private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_HISTORY = 1;
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int FRAGMENT_CHANGE_PASSWORD = 3;
     private int currentFragment = FRAGMENT_HOME;
 
-    private ImageView img_avatar;
-    private TextView txt_name, txt_email;
+    private ImageView userAvatar;
+    private TextView username, userEmail;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initial();
-        Toolbar toolbar = findViewById(R.id.MainActivity_toolbar);
-        setSupportActionBar(toolbar);
-        mdrawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        mdrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        initUI();
+        setupToolbar();
 
         replaceFragment(new Home());
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
@@ -93,67 +86,78 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
-        mdrawerLayout.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-        @Override
-        public void onBackPressed () {
-            Log.i("MainActivity", "Calling onBackPressed");
+    @Override
+    public void onBackPressed () {
+        Log.i("MainActivity", "Calling onBackPressed");
 
-            if (mdrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mdrawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
-        }
-
-        public void replaceFragment (Fragment fragment){
-            Log.i("MainActivity", "Calling replaceFragment");
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.MainActivity_toolbar, fragment);
-            transaction.commit();
-        }
-        public void initial(){
-            Log.i("MainActivity", "Calling initial");
-
-            navigationView = findViewById(R.id.MainActivity_navigationView);
-            navigationView.setNavigationItemSelectedListener(this);
-            img_avatar = navigationView.getHeaderView(0).findViewById(R.id.image_avatar);
-            txt_name = navigationView.getHeaderView(0).findViewById(R.id.txt_name);
-            txt_email = navigationView.getHeaderView(0).findViewById(R.id.txt_email);
-        }
-
-        public void showUserInformation(){
-            Log.i("MainActivity", "Calling showUserInformation");
-
-            Amplify.Auth.fetchAuthSession(
-                result -> {
-                    AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
-                    switch (cognitoAuthSession.getIdentityIdResult().getType()) {
-                        case SUCCESS: {
-                            Log.i(
-                                "getUserInformation",
-                                "Successfully retrieved data!"
-                            );
-                            break;
-                        }
-                        case FAILURE: {
-                            Log.i(
-                                "getUserInformation",
-                                "Unsuccessfully retrieved data!"
-                            );
-                            break;
-                        }
-                    }
-                },
-                error -> {
-                    Log.e(
-                        "getUserInformation",
-                        "Error while fetching userdata: " + error
-                    );
-                }
-            );
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
+
+    private void replaceFragment (Fragment fragment){
+        Log.i("MainActivity", "Calling replaceFragment");
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainActivity_toolbar, fragment);
+        transaction.commit();
+    }
+
+    private void showUserInformation(){
+        Log.i("MainActivity", "Calling showUserInformation");
+
+        Amplify.Auth.fetchAuthSession(
+            result -> {
+                AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
+                switch (cognitoAuthSession.getIdentityIdResult().getType()) {
+                    case SUCCESS: {
+                        Log.i(
+                            "getUserInformation",
+                            "Successfully retrieved data!"
+                        );
+                        break;
+                    }
+                    case FAILURE: {
+                        Log.i(
+                            "getUserInformation",
+                            "Unsuccessfully retrieved data!"
+                        );
+                        break;
+                    }
+                }
+            },
+            error -> {
+                Log.e(
+                    "getUserInformation",
+                    "Error while fetching userdata: " + error
+                );
+            }
+        );
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.MainActivity_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+    private void initUI(){
+        Log.i("MainActivity", "Calling initial");
+
+        navigationView = findViewById(R.id.MainActivity_navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+        userAvatar = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userAvatar);
+        username = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_username);
+        userEmail = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userEmail);
+        drawerLayout = findViewById(R.id.drawer_layout);
+    }
+}

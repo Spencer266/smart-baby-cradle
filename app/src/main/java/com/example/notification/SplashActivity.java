@@ -20,21 +20,11 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        try {
-            Amplify.addPlugin(new AWSCognitoAuthPlugin());
-            Amplify.configure(getApplicationContext());
-            Log.i("CognitoPlugin", "Successful added plugin!");
-        } catch (AmplifyException e) {
-            Log.e("CognitoPlugin", "Error while adding plugin " + e);
-        }
+
+        addPlugin();
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                nextActivity();
-            }
-        }, 2000);
+        handler.postDelayed(this::nextActivity, 2000);
     }
 
     private void nextActivity() {
@@ -51,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
                         );
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                         break;
                     }
 
@@ -61,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
                         );
                         Intent intent = new Intent(this, SignInActivity.class);
                         startActivity(intent);
+                        finish();
                         break;
                     }
 
@@ -73,7 +65,20 @@ public class SplashActivity extends AppCompatActivity {
                 );
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         );
+    }
+
+    private void addPlugin() {
+        Log.i("SplashActivity", "Calling addPlugin");
+
+        try {
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.configure(getApplicationContext());
+            Log.i("CognitoPlugin", "Successful added plugin!");
+        } catch (AmplifyException e) {
+            Log.e("CognitoPlugin", "Error while adding plugin " + e);
+        }
     }
 }
