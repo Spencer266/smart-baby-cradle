@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.auth.cognito.exceptions.service.UserNotConfirmedException;
 import com.amplifyframework.core.Amplify;
 
 public class SignInActivity extends AppCompatActivity {
@@ -64,6 +65,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (result.isSignedIn()) {
                     Log.i("SignIn", "Sign in successfully with email: " + result);
                     progressDialog.dismiss();
+
                     // Sign in success, update UI with the signed-in user's information
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -71,15 +73,27 @@ public class SignInActivity extends AppCompatActivity {
                 } else {
                     Log.i("SignIn", "Sign in unsuccessfully: " + result);
                     progressDialog.dismiss();
-                    // If sign in fails, display a message to the user.
 
+                    // If sign in fails, display a message to the user.
                     Toast.makeText(SignInActivity.this, "Đăng nhập thất bại. ",
                             Toast.LENGTH_SHORT).show();
                 }
             },
-            error -> Log.e("SignIn", "Error while signing in: " + error)
-
+            error -> {
+                if (error instanceof UserNotConfirmedException) {
+                    Intent intent = new Intent(this, VerifyActivity.class);
+                    intent.putExtra("userEmail", getUserEmail());
+                    intent.putExtra("resendVerificationEmail", "Yes");
+                    startActivity(intent);
+                } else {
+                    Log.e("SignIn", "Error while signing in: " + error);
+                }
+            }
         );
+    }
+
+    public String getUserEmail() {
+        return userEmail.getText().toString();
     }
 
     private void initUI() {

@@ -205,6 +205,20 @@
         }
       }
     },
+    "apismartgradle": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "Parameters": {
+          "AppSyncApiName": "smartgradle",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "S3DeploymentBucket": "amplify-smartgradle-dev-111801-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/0f08f7b8743c400d3d489aa872415b315991882c",
+          "env": "dev"
+        }
+      }
+    },
     "UpdateRolesWithIDPFunction": {
       "DependsOn": [
         "AuthRole",

@@ -1,0 +1,272 @@
+type BabyData {
+  deviceId: String
+  bracelet: Bracelet
+  cradle: Cradle
+  controller: Controller
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Bracelet {
+  heartBeats: Float
+  oxygen: Float
+  temperature: Float
+}
+
+type Cradle {
+  environmentTemp: Float
+  humidity: Float
+  cry: String
+}
+
+type Controller {
+  fanSpeed: String
+  swaying: String
+  playingMusic: Boolean
+  humidifier: Boolean
+  acTemp: Float
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input BraceletInput {
+  heartBeats: Float
+  oxygen: Float
+  temperature: Float
+}
+
+input CradleInput {
+  environmentTemp: Float
+  humidity: Float
+  cry: String
+}
+
+input ControllerInput {
+  fanSpeed: String
+  swaying: String
+  playingMusic: Boolean
+  humidifier: Boolean
+  acTemp: Float
+}
+
+type ModelBabyDataConnection {
+  items: [BabyData]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelBabyDataFilterInput {
+  deviceId: ModelStringInput
+  and: [ModelBabyDataFilterInput]
+  or: [ModelBabyDataFilterInput]
+  not: ModelBabyDataFilterInput
+  _deleted: ModelBooleanInput
+}
+
+type Query {
+  getBabyData(id: ID!): BabyData
+  listBabyData(filter: ModelBabyDataFilterInput, limit: Int, nextToken: String): ModelBabyDataConnection
+  syncBabyData(filter: ModelBabyDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBabyDataConnection
+}
+
+input ModelBabyDataConditionInput {
+  deviceId: ModelStringInput
+  and: [ModelBabyDataConditionInput]
+  or: [ModelBabyDataConditionInput]
+  not: ModelBabyDataConditionInput
+  _deleted: ModelBooleanInput
+}
+
+input CreateBabyDataInput {
+  deviceId: String
+  bracelet: BraceletInput
+  cradle: CradleInput
+  controller: ControllerInput
+  id: ID
+  _version: Int
+}
+
+input UpdateBabyDataInput {
+  deviceId: String
+  bracelet: BraceletInput
+  cradle: CradleInput
+  controller: ControllerInput
+  id: ID!
+  _version: Int
+}
+
+input DeleteBabyDataInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createBabyData(input: CreateBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
+  updateBabyData(input: UpdateBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
+  deleteBabyData(input: DeleteBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
+}
+
+input ModelSubscriptionBabyDataFilterInput {
+  deviceId: ModelSubscriptionStringInput
+  and: [ModelSubscriptionBabyDataFilterInput]
+  or: [ModelSubscriptionBabyDataFilterInput]
+  _deleted: ModelBooleanInput
+}
+
+type Subscription {
+  onCreateBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["createBabyData"])
+  onUpdateBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["updateBabyData"])
+  onDeleteBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["deleteBabyData"])
+}

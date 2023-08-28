@@ -25,8 +25,14 @@
         android:id="@+id/VerifyActivity_confirmButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xác nhân"
+        android:text="Xác nhận"
         android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/VerifyActivity_resendVerificationCodeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chưa nhận được mã? Gửi lại?"/>
 
 
 

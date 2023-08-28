@@ -1,0 +1,124 @@
+# this is an auto generated file. This will be overwritten
+
+query GetBabyData($id: ID!) {
+  getBabyData(id: $id) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+query ListBabyData(
+  $filter: ModelBabyDataFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBabyData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      deviceId
+      bracelet {
+        heartBeats
+        oxygen
+        temperature
+        __typename
+      }
+      cradle {
+        environmentTemp
+        humidity
+        cry
+        __typename
+      }
+      controller {
+        fanSpeed
+        swaying
+        playingMusic
+        humidifier
+        acTemp
+        __typename
+      }
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+
+query SyncBabyData(
+  $filter: ModelBabyDataFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncBabyData(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      deviceId
+      bracelet {
+        heartBeats
+        oxygen
+        temperature
+        __typename
+      }
+      cradle {
+        environmentTemp
+        humidity
+        cry
+        __typename
+      }
+      controller {
+        fanSpeed
+        swaying
+        playingMusic
+        humidifier
+        acTemp
+        __typename
+      }
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}

@@ -1,0 +1,100 @@
+# this is an auto generated file. This will be overwritten
+
+subscription OnCreateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
+  onCreateBabyData(filter: $filter) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+subscription OnUpdateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
+  onUpdateBabyData(filter: $filter) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+subscription OnDeleteBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
+  onDeleteBabyData(filter: $filter) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}

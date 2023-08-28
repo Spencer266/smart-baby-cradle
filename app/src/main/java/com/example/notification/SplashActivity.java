@@ -8,9 +8,15 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Post;
+import com.amplifyframework.datastore.generated.model.PostStatus;
+import com.amplifyframework.datastore.generated.model.Todo;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -68,6 +74,8 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         );
+
+        Log.i("SplashActivity", "Complete NextActivity");
     }
 
     private void addPlugin() {
@@ -75,10 +83,45 @@ public class SplashActivity extends AppCompatActivity {
 
         try {
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
-            Amplify.configure(getApplicationContext());
-            Log.i("CognitoPlugin", "Successful added plugin!");
+
+            Log.i("CognitoPlugin", "Successfully added Auth plugin!");
         } catch (AmplifyException e) {
-            Log.e("CognitoPlugin", "Error while adding plugin " + e);
+            Log.e("CognitoPlugin", "Error while adding Auth plugin " + e);
         }
+
+        try {
+            Amplify.addPlugin(new AWSDataStorePlugin());
+
+            Log.i("DataStorePlugin", "Successfully added DataStore plugin!");
+        } catch (AmplifyException e) {
+            Log.e("DataStorePlugin", "Error while adding DataStore plugin " + e);
+        }
+
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+
+            Log.i("ApiPlugin", "Successfully added Api plugin!");
+        } catch (AmplifyException e) {
+            Log.e("ApiPlugin", "Error while adding Api plugin " + e);
+        }
+
+        try {
+            Amplify.configure(getApplicationContext());
+
+            Log.i("ConfigurePlugin", "Successfully configured plugins");
+        } catch (AmplifyException e) {
+            Log.e("ConfigurePlugin", "Error while configuring plugins " + e);
+        }
+
+        Todo todo = Todo.builder()
+                .name("My first todo")
+                .description("todo description")
+                .build();
+
+        Amplify.API.mutate(
+                ModelMutation.create(todo),
+                response -> Log.i("MyAmplifyApp", "Added Todo with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
     }
 }

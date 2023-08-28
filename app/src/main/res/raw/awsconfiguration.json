@@ -39,5 +39,14 @@
                 "EMAIL"
             ]
         }
+    },
+    "AppSync": {
+        "Default": {
+            "ApiUrl": "https://eg37nmeijnd37ke53ictyoy7vq.appsync-api.ap-northeast-2.amazonaws.com/graphql",
+            "Region": "ap-northeast-2",
+            "AuthMode": "API_KEY",
+            "ApiKey": "da2-r7z35epw55cr7pfwmytcwerpxe",
+            "ClientDatabasePrefix": "smartgradle_API_KEY"
+        }
     }
 }

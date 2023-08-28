@@ -1,0 +1,109 @@
+# this is an auto generated file. This will be overwritten
+
+mutation CreateBabyData(
+  $input: CreateBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  createBabyData(input: $input, condition: $condition) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation UpdateBabyData(
+  $input: UpdateBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  updateBabyData(input: $input, condition: $condition) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation DeleteBabyData(
+  $input: DeleteBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  deleteBabyData(input: $input, condition: $condition) {
+    deviceId
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}

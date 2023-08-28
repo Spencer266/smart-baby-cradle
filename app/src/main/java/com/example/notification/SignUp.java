@@ -50,6 +50,7 @@ public class SignUp extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Intent intent = new Intent(this, VerifyActivity.class);
                         intent.putExtra("userEmail", getUserEmail());
+                        intent.putExtra("resendVerificationEmail", "No");
                         startActivity(intent);
                         finish();
                     },

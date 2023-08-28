@@ -1,0 +1,26 @@
+type BabyData @model @auth(rules: [{ allow: public }]) {
+  deviceId : String
+  bracelet: Bracelet
+  cradle: Cradle
+  controller: Controller
+}
+
+type Bracelet {
+  heartBeats: Float,
+  oxygen: Float,
+  temperature: Float
+}
+
+type Cradle {
+  environmentTemp: Float,
+  humidity: Float,
+  cry: String
+}
+
+type Controller {
+  fanSpeed: String
+  swaying: String
+  playingMusic: Boolean
+  humidifier: Boolean
+  acTemp: Float
+}

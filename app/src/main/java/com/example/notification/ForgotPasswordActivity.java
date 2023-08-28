@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
 
@@ -24,15 +25,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private void onClickResetButton() {
-        resetButton.setOnClickListener(view -> {
-            String userEmail = editEmail.getText().toString().trim();
+        Log.i("ForgotPasswordActivity", "Calling onClickResetButton");
 
-            Amplify.Auth.resetPassword(
-                    userEmail,
-                    result -> Log.i("ResetPassword", result.toString()),
-                    error -> Log.e("ResetPassword", error.toString())
-            );
-        });
+//        resetButton.setOnClickListener(view -> {
+//            Toast.makeText(this, "This function has not been implemented yet!", Toast.LENGTH_LONG).show();
+//        });
     }
 
     private void initUI() {

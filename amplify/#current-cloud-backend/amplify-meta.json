@@ -40,7 +40,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/auth/smartgradle4672367b-cloudformation-template.json",
         "logicalId": "authsmartgradle4672367b"
       },
-      "lastPushTimeStamp": "2023-08-23T10:39:11.095Z",
+      "lastPushTimeStamp": "2023-08-28T08:07:29.105Z",
       "output": {
         "UserPoolId": "ap-northeast-2_tuzrakCQd",
         "AppClientIDWeb": "4l921cnkg4vkkffcocqm0fnk8l",
@@ -51,6 +51,33 @@
         "UserPoolName": "smartgradle4672367b_userpool_4672367b"
       },
       "lastPushDirHash": "g4KKS+g0eOVT7R8wijD7lhBCyF4="
+    }
+  },
+  "api": {
+    "smartgradle": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "nidl4x4v2zbvdimmejonxjcj5m",
+        "GraphQLAPIEndpointOutput": "https://eg37nmeijnd37ke53ictyoy7vq.appsync-api.ap-northeast-2.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-r7z35epw55cr7pfwmytcwerpxe"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apismartgradle"
+      },
+      "lastPushTimeStamp": "2023-08-28T08:07:35.230Z",
+      "lastPushDirHash": "K9gXAany4oJLb0aEa8dT7R+ymDU="
     }
   }
 }

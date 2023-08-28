@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.cognito.result.GlobalSignOutError;
+import com.amplifyframework.auth.cognito.result.HostedUIError;
+import com.amplifyframework.auth.cognito.result.RevokeTokenError;
 import com.amplifyframework.core.Amplify;
 import com.example.notification.fragment.Account;
 import com.example.notification.fragment.PasswordManager;
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         else if(id == R.id.nav_signOut){
+            signOut();
+
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             finish();
@@ -149,6 +155,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void signOut() {
+        Log.i("MainActivity", "Calling signOut");
+
+        Amplify.Auth.signOut(signOutResult -> {
+           if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+               Log.i("SignOut", "Successfully signed out!");
+           } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+               Log.i("SignOut", "Paritial signed out!");
+
+               AWSCognitoAuthSignOutResult.PartialSignOut partialSignOutResult
+                       = (AWSCognitoAuthSignOutResult.PartialSignOut) signOutResult;
+
+               HostedUIError hostedUIError
+                       = partialSignOutResult.getHostedUIError();
+
+               if (hostedUIError != null) {
+                   Log.e("SignOut", "HostedUIError: " + hostedUIError, hostedUIError.getException());
+               }
+
+               GlobalSignOutError globalSignOutError
+                       = partialSignOutResult.getGlobalSignOutError();
+               if (globalSignOutError != null) {
+                   Log.e("SignOut", "GlobalSignOutError: " + globalSignOutError, globalSignOutError.getException());
+               }
+
+               RevokeTokenError revokeTokenError
+                       = partialSignOutResult.getRevokeTokenError();
+               if (revokeTokenError != null) {
+                   Log.e("SignOut", "RevokeTokenError: " + revokeTokenError, revokeTokenError.getException());
+               }
+
+           } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+                AWSCognitoAuthSignOutResult.FailedSignOut failedSignOut
+                        = (AWSCognitoAuthSignOutResult.FailedSignOut) signOutResult;
+                Log.e("SignOut", "FailedSignOut: " + failedSignOut, failedSignOut.getException());
+           }
+        });
     }
     private void initUI(){
         Log.i("MainActivity", "Calling initial");
