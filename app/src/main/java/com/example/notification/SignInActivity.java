@@ -68,6 +68,12 @@ public class SignInActivity extends AppCompatActivity {
 
                     // Sign in success, update UI with the signed-in user's information
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+
+                    Amplify.Auth.fetchUserAttributes(
+                            attributes -> Log.i("AuthDemo", "User attributes = " + attributes),
+                            error -> Log.e("AuthDemo", "Failed to fetch user attributes.", error)
+                    );
+
                     startActivity(intent);
                     finish();
                 } else {
@@ -99,10 +105,10 @@ public class SignInActivity extends AppCompatActivity {
     private void initUI() {
         Log.i("SignInActivity", "Calling InitUI");
 
-        userEmail = findViewById(R.id.SignInActivity_userEmail);
-        userPassword = findViewById(R.id.SignInActivity_userPassword);
-        signInButton = findViewById(R.id.SignInActivity_signInButton);
-        signUp = findViewById(R.id.SignInActivity_signUp);
+        userEmail      = findViewById(R.id.SignInActivity_userEmail);
+        userPassword   = findViewById(R.id.SignInActivity_userPassword);
+        signInButton   = findViewById(R.id.SignInActivity_signInButton);
+        signUp         = findViewById(R.id.SignInActivity_signUp);
         forgotPassword = findViewById(R.id.SignInActivity_forgotPassword);
         progressDialog = new ProgressDialog(this);
     }

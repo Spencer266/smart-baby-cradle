@@ -70,8 +70,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         );
-
-        Log.i("SplashActivity", "Complete NextActivity");
     }
 
     private void addPlugin() {

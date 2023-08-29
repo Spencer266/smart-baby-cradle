@@ -84,10 +84,10 @@ public class SignUp extends AppCompatActivity {
     private void initUI() {
         Log.i("SignUp", "Calling initUI");
 
-        userEmail = findViewById(R.id.SignUp_userEmail);
-        userPassword = findViewById(R.id.SignUp_userPassword);
+        userEmail           = findViewById(R.id.SignUp_userEmail);
+        userPassword        = findViewById(R.id.SignUp_userPassword);
         userConfirmPassword = findViewById(R.id.SignUp_userConfirmPassword);
-        signUp = findViewById(R.id.SignUp_signUpButton);
-        progressDialog = new ProgressDialog(this);
+        signUp              = findViewById(R.id.SignUp_signUpButton);
+        progressDialog      = new ProgressDialog(this);
     }
 }

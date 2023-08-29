@@ -42,7 +42,7 @@ public class History extends Fragment {
         return view;
     }
 
-    void onClickPushButton() {
+    private void onClickPushButton() {
         Log.i("History", "Calling onClickPushButton");
 
         pushButton.setOnClickListener(view -> {

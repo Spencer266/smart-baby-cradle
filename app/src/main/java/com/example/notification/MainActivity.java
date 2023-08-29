@@ -17,13 +17,14 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
 import com.amplifyframework.auth.cognito.result.GlobalSignOutError;
 import com.amplifyframework.auth.cognito.result.HostedUIError;
 import com.amplifyframework.auth.cognito.result.RevokeTokenError;
 import com.amplifyframework.core.Amplify;
-import com.example.notification.fragment.Account;
+import com.example.notification.fragment.DeviceManager;
 import com.example.notification.fragment.PasswordManager;
 import com.example.notification.fragment.History;
 import com.example.notification.fragment.Home;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_HISTORY = 1;
-    private static final int FRAGMENT_ACCOUNT = 2;
+    private static final int FRAGMENT_ADDING_DEVICE = 2;
     private static final int FRAGMENT_CHANGE_PASSWORD = 3;
     private int currentFragment = FRAGMENT_HOME;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupToolbar();
 
         replaceFragment(new Home());
-        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+        navigationView.getMenu().findItem(R.id.MainActivity_nav_home).setChecked(true);
         showUserInformation();
     }
 
@@ -60,31 +61,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.i("MainActivity", "Calling onNavigationItemSelected");
         int id = item.getItemId();
         Log.i("MainActivity", "Choosing item: " + id);
-        if (id == R.id.nav_home) {
+        if (id == R.id.MainActivity_nav_home) {
             if (currentFragment != FRAGMENT_HOME) {
                 replaceFragment(new Home());
                 currentFragment = FRAGMENT_HOME;
             }
         }
-        else if (id == R.id.nav_history) {
+        else if (id == R.id.MainActivity_nav_adding_device) {
+            if (currentFragment != FRAGMENT_ADDING_DEVICE) {
+                replaceFragment(new DeviceManager());
+                currentFragment = FRAGMENT_ADDING_DEVICE;
+            }
+        }
+        else if (id == R.id.MainActivity_nav_history) {
             if (currentFragment != FRAGMENT_HISTORY) {
                 replaceFragment(new History());
                 currentFragment = FRAGMENT_HISTORY;
             }
         }
-        else if(id == R.id.nav_account){
-            if (currentFragment != FRAGMENT_ACCOUNT) {
-                replaceFragment(new Account());
-                currentFragment = FRAGMENT_ACCOUNT;
-            }
-        }
-        else if(id == R.id.nav_change_password){
+        else if(id == R.id.MainActivity_nav_change_password){
             if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
                 replaceFragment(new PasswordManager());
                 currentFragment = FRAGMENT_CHANGE_PASSWORD;
             }
         }
-        else if(id == R.id.nav_signOut){
+        else if(id == R.id.MainActivity_nav_signOut){
             signOut();
 
             Intent intent = new Intent(this, SignInActivity.class);
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.i("MainActivity", "Calling replaceFragment");
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.MainActivity_toolbar, fragment);
+        transaction.replace(R.id.MainActivity_contentFrame, fragment);
         transaction.commit();
     }
 
@@ -126,6 +127,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Log.i(
                             "getUserInformation",
                             "Successfully retrieved data!"
+                        );
+
+                        Amplify.Auth.getCurrentUser(
+                                authUser -> {
+                                    Log.i("getCurrentUser", authUser.getUsername());
+                                    String currentUserEmail = authUser.getUsername(), currentUsername = "";
+                                    for (int i = 0; i < currentUserEmail.length(); i++) {
+                                        if (currentUserEmail.charAt(i) == '@') {
+                                            break;
+                                        }
+                                        currentUsername += currentUserEmail.charAt(i);
+                                    }
+                                    username.setText(currentUsername);
+                                    userEmail.setText(currentUserEmail);
+                                },
+                                error -> Log.e("getCurrentUser", "Something is not right?", error)
                         );
                         break;
                     }
@@ -201,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.MainActivity_navigationView);
         navigationView.setNavigationItemSelectedListener(this);
-        userAvatar = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userAvatar);
-        username = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_username);
-        userEmail = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userEmail);
-        drawerLayout = findViewById(R.id.drawer_layout);
+        userAvatar     = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userAvatar);
+        username       = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_username);
+        userEmail      = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userEmail);
+        drawerLayout   = findViewById(R.id.MainActivity_drawer_layout);
     }
 }

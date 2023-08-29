@@ -27,7 +27,7 @@ public class PasswordManager extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_change_password, container, false);
         initUI();
-        changePasswordButton.setOnClickListener(view -> changePassword());
+        onClickChangePasswordButton();
         return mView;
     }
 
@@ -75,10 +75,14 @@ public class PasswordManager extends Fragment {
         }
     }
 
+    void onClickChangePasswordButton() {
+        changePasswordButton.setOnClickListener(view -> changePassword());
+    }
+
     private void initUI() {
-        currentPassword = mView.findViewById(R.id.PasswordManager_currentPassword);
-        newPassword = mView.findViewById(R.id.PasswordManager_newPassword);
-        confirmPassword = mView.findViewById(R.id.PasswordManager_confirmPassword);
+        currentPassword      = mView.findViewById(R.id.PasswordManager_currentPassword);
+        newPassword          = mView.findViewById(R.id.PasswordManager_newPassword);
+        confirmPassword      = mView.findViewById(R.id.PasswordManager_confirmPassword);
         changePasswordButton = mView.findViewById(R.id.PasswordManager_changePasswordButton);
     }
 }

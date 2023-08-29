@@ -9,7 +9,6 @@
     android:orientation="vertical"
     android:layout_marginBottom="10dp">
 
-    />
     <TextView
         android:id="@+id/item_temperature"
         android:layout_width="match_parent"

@@ -35,7 +35,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void initUI() {
         Log.i("ForgotPasswordActivity", "Calling InitUI");
 
-        editEmail = findViewById(R.id.ForgotPassword_editEmail);
+        editEmail   = findViewById(R.id.ForgotPassword_editEmail);
         resetButton = findViewById(R.id.ForgotPassword_resetButton);
     }
 }

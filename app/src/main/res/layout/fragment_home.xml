@@ -27,7 +27,7 @@
         <Spinner
             android:id="@+id/Home_deviceChooser"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
 

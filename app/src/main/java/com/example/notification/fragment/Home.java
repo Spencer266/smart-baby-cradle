@@ -26,21 +26,18 @@ public class Home extends Fragment {
         View = inflater.inflate(R.layout.fragment_home, container, false);
 
         init();
+        initUI();
 
         return View;
     }
 
     private void init() {
-        Amplify.Auth.fetchUserAttributes(
-            attributes -> {
-                Log.i("AuthFetch", "User attributes = " + attributes.toString());
-            },
-            error -> Log.e("AuthFetch", "Failed to retrieve current user data!")
-        );
+
     }
 
-    private void InitUI() {
+    private void initUI() {
         deviceChooser = View.findViewById(R.id.Home_deviceChooser);
+
     }
 
 }

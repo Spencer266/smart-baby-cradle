@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/MainActivity_nav_home"
             android:title="@string/nav_home"
             android:icon="@drawable/ic_home" />
 
         <item
-            android:id="@+id/nav_history"
+            android:id="@+id/MainActivity_nav_history"
             android:title="@string/nav_history"
             android:icon="@drawable/ic_history" />
 
@@ -16,20 +16,19 @@
     <item android:title="@string/nav_account">
         <menu>
             <item
-                android:id="@+id/nav_account"
+                android:id="@+id/MainActivity_nav_account"
                 android:title="@string/nav_account"
                 android:icon="@drawable/ic_account_manage" />
-
             <item
-                android:id="@+id/nav_profile"
-                android:title="@string/nav_profile"
-                android:icon="@drawable/ic_profile" />
+                android:id="@+id/MainActivity_nav_adding_device"
+                android:title="Add new device"
+                android:icon="@drawable/ic_adding"/>
             <item
-                android:id="@+id/nav_change_password"
+                android:id="@+id/MainActivity_nav_change_password"
                 android:title="@string/nav_change_password"
                 android:icon="@drawable/ic_change_password" />
             <item
-                android:id="@+id/nav_signOut"
+                android:id="@+id/MainActivity_nav_signOut"
                 android:title="@string/nav_signOut"
                 android:icon="@drawable/logout" />
         </menu>

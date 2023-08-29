@@ -99,6 +99,8 @@ public class VerifyActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        Log.i("VerifyActivity", "Calling initUI");
+
         verificationMessage        = findViewById(R.id.VerifyActivity_verificationMessage);
         verificationCode           = findViewById(R.id.VerifyActivity_verificationCode);
         confirmButton              = findViewById(R.id.VerifyActivity_confirmButton);
