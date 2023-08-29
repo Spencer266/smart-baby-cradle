@@ -34,27 +34,32 @@ public class VerifyActivity extends AppCompatActivity {
     private void onClickConfirm() {
         Log.i("VerifyActivity", "Calling onClickConfirm");
 
-        confirmButton.setOnClickListener(view -> {
+        confirmButton.setOnClickListener(view ->
             Amplify.Auth.confirmSignUp(
                     getCurrentUserEmail(),
                     getVerificationCode(),
                     result -> {
                         Log.i("confirmSignUp", "Successfully confirm sign up!" + result);
+                        Toast.makeText(this, "Successfully confirm sign up!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, SignInActivity.class);
                         startActivity(intent);
                         finish();
                     },
                     error -> {
                         Log.e("confirmSignUp", "Unsuccessfully confirm sign up!" + error);
+                        Toast.makeText(this, "Unsuccessfully confirm sign up!", Toast.LENGTH_SHORT).show();
                     }
-            );
-        });
+            )
+        );
     }
 
     private void onClickResendVerificationCode() {
         Log.i("VerifyActivity", "Calling onClickResendVerificationCode");
         resendVerificationCodeText.setOnClickListener(view -> {
             resendVerificationMessage();
+            Toast.makeText(this,
+                    "Verification code has been resent! ",
+                    Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -64,13 +69,24 @@ public class VerifyActivity extends AppCompatActivity {
     }
 
     private void updateVerificationMessage() {
-        verificationMessage.setText("A verification email have been send to" + currentUserEmail);
-        Toast.makeText(this, "Verification code has been resent!", Toast.LENGTH_SHORT).show();
+        verificationMessage.setText("A verification email have been send to" + getCurrentUserEmail());
+        Toast.makeText(
+                this,
+                "Verification code has been resent!",
+                Toast.LENGTH_SHORT).show();
     }
     private void resendVerificationMessage() {
-        Amplify.Auth.resendUserAttributeConfirmationCode(AuthUserAttributeKey.email(),
-                result -> Log.i("ResendVerificationCode", "Successfully resend verification code: " + result),
-                error -> Log.e("ResendVerificationCode", "Failed to send verification code." + error, error)
+        Amplify.Auth.resendUserAttributeConfirmationCode(
+                AuthUserAttributeKey.email(),
+                result -> Log.i(
+                        "ResendVerificationCode",
+                        "Successfully resend verification code: " + result
+                ),
+                error -> Log.e(
+                        "ResendVerificationCode",
+                        "Failed to send verification code." + error,
+                        error
+                )
         );
 
     }
@@ -83,9 +99,9 @@ public class VerifyActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        verificationMessage = findViewById(R.id.VerifyActivity_verificationMessage);
-        verificationCode = findViewById(R.id.VerifyActivity_verificationCode);
-        confirmButton = findViewById(R.id.VerifyActivity_confirmButton);
+        verificationMessage        = findViewById(R.id.VerifyActivity_verificationMessage);
+        verificationCode           = findViewById(R.id.VerifyActivity_verificationCode);
+        confirmButton              = findViewById(R.id.VerifyActivity_confirmButton);
         resendVerificationCodeText = findViewById(R.id.VerifyActivity_resendVerificationCodeText);
     }
 }

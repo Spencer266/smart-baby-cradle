@@ -40,7 +40,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/auth/smartgradle4672367b-cloudformation-template.json",
         "logicalId": "authsmartgradle4672367b"
       },
-      "lastPushTimeStamp": "2023-08-28T08:07:29.105Z",
+      "lastPushTimeStamp": "2023-08-29T04:21:31.539Z",
       "output": {
         "UserPoolId": "ap-northeast-2_tuzrakCQd",
         "AppClientIDWeb": "4l921cnkg4vkkffcocqm0fnk8l",
@@ -76,8 +76,8 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-smartgradle-dev-111801-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apismartgradle"
       },
-      "lastPushTimeStamp": "2023-08-28T08:07:35.230Z",
-      "lastPushDirHash": "K9gXAany4oJLb0aEa8dT7R+ymDU="
+      "lastPushTimeStamp": "2023-08-29T04:21:36.438Z",
+      "lastPushDirHash": "bQAtt3E1oyCBmc+N0W1skQ8Mnps="
     }
   }
 }

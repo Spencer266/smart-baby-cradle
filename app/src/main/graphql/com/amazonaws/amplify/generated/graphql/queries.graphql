@@ -3,6 +3,7 @@
 query GetBabyData($id: ID!) {
   getBabyData(id: $id) {
     deviceId
+    timestamp
     bracelet {
       heartBeats
       oxygen
@@ -41,6 +42,7 @@ query ListBabyData(
   listBabyData(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       deviceId
+      timestamp
       bracelet {
         heartBeats
         oxygen
@@ -89,6 +91,7 @@ query SyncBabyData(
   ) {
     items {
       deviceId
+      timestamp
       bracelet {
         heartBeats
         oxygen
@@ -109,6 +112,72 @@ query SyncBabyData(
         acTemp
         __typename
       }
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+
+query GetUserDevice($id: ID!) {
+  getUserDevice(id: $id) {
+    userID
+    deviceId
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+query ListUserDevices(
+  $filter: ModelUserDeviceFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserDevices(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      deviceId
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+
+query SyncUserDevices(
+  $filter: ModelUserDeviceFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncUserDevices(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      userID
+      deviceId
       id
       createdAt
       updatedAt

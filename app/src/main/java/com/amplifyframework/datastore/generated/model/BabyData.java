@@ -27,11 +27,13 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class BabyData implements Model {
   public static final QueryField ID = field("BabyData", "id");
   public static final QueryField DEVICE_ID = field("BabyData", "deviceId");
+  public static final QueryField TIMESTAMP = field("BabyData", "timestamp");
   public static final QueryField BRACELET = field("BabyData", "bracelet");
   public static final QueryField CRADLE = field("BabyData", "cradle");
   public static final QueryField CONTROLLER = field("BabyData", "controller");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String") String deviceId;
+  private final @ModelField(targetType="String", isRequired = true) String deviceId;
+  private final @ModelField(targetType="Int", isRequired = true) Integer timestamp;
   private final @ModelField(targetType="Bracelet") Bracelet bracelet;
   private final @ModelField(targetType="Cradle") Cradle cradle;
   private final @ModelField(targetType="Controller") Controller controller;
@@ -47,6 +49,10 @@ public final class BabyData implements Model {
   
   public String getDeviceId() {
       return deviceId;
+  }
+  
+  public Integer getTimestamp() {
+      return timestamp;
   }
   
   public Bracelet getBracelet() {
@@ -69,9 +75,10 @@ public final class BabyData implements Model {
       return updatedAt;
   }
   
-  private BabyData(String id, String deviceId, Bracelet bracelet, Cradle cradle, Controller controller) {
+  private BabyData(String id, String deviceId, Integer timestamp, Bracelet bracelet, Cradle cradle, Controller controller) {
     this.id = id;
     this.deviceId = deviceId;
+    this.timestamp = timestamp;
     this.bracelet = bracelet;
     this.cradle = cradle;
     this.controller = controller;
@@ -87,6 +94,7 @@ public final class BabyData implements Model {
       BabyData babyData = (BabyData) obj;
       return ObjectsCompat.equals(getId(), babyData.getId()) &&
               ObjectsCompat.equals(getDeviceId(), babyData.getDeviceId()) &&
+              ObjectsCompat.equals(getTimestamp(), babyData.getTimestamp()) &&
               ObjectsCompat.equals(getBracelet(), babyData.getBracelet()) &&
               ObjectsCompat.equals(getCradle(), babyData.getCradle()) &&
               ObjectsCompat.equals(getController(), babyData.getController()) &&
@@ -100,6 +108,7 @@ public final class BabyData implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getDeviceId())
+      .append(getTimestamp())
       .append(getBracelet())
       .append(getCradle())
       .append(getController())
@@ -115,6 +124,7 @@ public final class BabyData implements Model {
       .append("BabyData {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("deviceId=" + String.valueOf(getDeviceId()) + ", ")
+      .append("timestamp=" + String.valueOf(getTimestamp()) + ", ")
       .append("bracelet=" + String.valueOf(getBracelet()) + ", ")
       .append("cradle=" + String.valueOf(getCradle()) + ", ")
       .append("controller=" + String.valueOf(getController()) + ", ")
@@ -124,7 +134,7 @@ public final class BabyData implements Model {
       .toString();
   }
   
-  public static BuildStep builder() {
+  public static DeviceIdStep builder() {
       return new Builder();
   }
   
@@ -142,6 +152,7 @@ public final class BabyData implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -149,23 +160,34 @@ public final class BabyData implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       deviceId,
+      timestamp,
       bracelet,
       cradle,
       controller);
   }
+  public interface DeviceIdStep {
+    TimestampStep deviceId(String deviceId);
+  }
+  
+
+  public interface TimestampStep {
+    BuildStep timestamp(Integer timestamp);
+  }
+  
+
   public interface BuildStep {
     BabyData build();
     BuildStep id(String id);
-    BuildStep deviceId(String deviceId);
     BuildStep bracelet(Bracelet bracelet);
     BuildStep cradle(Cradle cradle);
     BuildStep controller(Controller controller);
   }
   
 
-  public static class Builder implements BuildStep {
+  public static class Builder implements DeviceIdStep, TimestampStep, BuildStep {
     private String id;
     private String deviceId;
+    private Integer timestamp;
     private Bracelet bracelet;
     private Cradle cradle;
     private Controller controller;
@@ -176,14 +198,23 @@ public final class BabyData implements Model {
         return new BabyData(
           id,
           deviceId,
+          timestamp,
           bracelet,
           cradle,
           controller);
     }
     
     @Override
-     public BuildStep deviceId(String deviceId) {
+     public TimestampStep deviceId(String deviceId) {
+        Objects.requireNonNull(deviceId);
         this.deviceId = deviceId;
+        return this;
+    }
+    
+    @Override
+     public BuildStep timestamp(Integer timestamp) {
+        Objects.requireNonNull(timestamp);
+        this.timestamp = timestamp;
         return this;
     }
     
@@ -217,9 +248,10 @@ public final class BabyData implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String deviceId, Bracelet bracelet, Cradle cradle, Controller controller) {
+    private CopyOfBuilder(String id, String deviceId, Integer timestamp, Bracelet bracelet, Cradle cradle, Controller controller) {
       super.id(id);
       super.deviceId(deviceId)
+        .timestamp(timestamp)
         .bracelet(bracelet)
         .cradle(cradle)
         .controller(controller);
@@ -228,6 +260,11 @@ public final class BabyData implements Model {
     @Override
      public CopyOfBuilder deviceId(String deviceId) {
       return (CopyOfBuilder) super.deviceId(deviceId);
+    }
+    
+    @Override
+     public CopyOfBuilder timestamp(Integer timestamp) {
+      return (CopyOfBuilder) super.timestamp(timestamp);
     }
     
     @Override

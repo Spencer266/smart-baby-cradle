@@ -1,5 +1,6 @@
 type BabyData {
-  deviceId: String
+  deviceId: String!
+  timestamp: Int!
   bracelet: Bracelet
   cradle: Cradle
   controller: Controller
@@ -29,6 +30,17 @@ type Controller {
   playingMusic: Boolean
   humidifier: Boolean
   acTemp: Float
+}
+
+type UserDevice {
+  userID: String!
+  deviceId: String!
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
 }
 
 input ModelStringInput {
@@ -209,6 +221,7 @@ type ModelBabyDataConnection {
 
 input ModelBabyDataFilterInput {
   deviceId: ModelStringInput
+  timestamp: ModelIntInput
   and: [ModelBabyDataFilterInput]
   or: [ModelBabyDataFilterInput]
   not: ModelBabyDataFilterInput
@@ -219,10 +232,14 @@ type Query {
   getBabyData(id: ID!): BabyData
   listBabyData(filter: ModelBabyDataFilterInput, limit: Int, nextToken: String): ModelBabyDataConnection
   syncBabyData(filter: ModelBabyDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBabyDataConnection
+  getUserDevice(id: ID!): UserDevice
+  listUserDevices(filter: ModelUserDeviceFilterInput, limit: Int, nextToken: String): ModelUserDeviceConnection
+  syncUserDevices(filter: ModelUserDeviceFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUserDeviceConnection
 }
 
 input ModelBabyDataConditionInput {
   deviceId: ModelStringInput
+  timestamp: ModelIntInput
   and: [ModelBabyDataConditionInput]
   or: [ModelBabyDataConditionInput]
   not: ModelBabyDataConditionInput
@@ -230,7 +247,8 @@ input ModelBabyDataConditionInput {
 }
 
 input CreateBabyDataInput {
-  deviceId: String
+  deviceId: String!
+  timestamp: Int!
   bracelet: BraceletInput
   cradle: CradleInput
   controller: ControllerInput
@@ -240,6 +258,7 @@ input CreateBabyDataInput {
 
 input UpdateBabyDataInput {
   deviceId: String
+  timestamp: Int
   bracelet: BraceletInput
   cradle: CradleInput
   controller: ControllerInput
@@ -256,10 +275,14 @@ type Mutation {
   createBabyData(input: CreateBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
   updateBabyData(input: UpdateBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
   deleteBabyData(input: DeleteBabyDataInput!, condition: ModelBabyDataConditionInput): BabyData
+  createUserDevice(input: CreateUserDeviceInput!, condition: ModelUserDeviceConditionInput): UserDevice
+  updateUserDevice(input: UpdateUserDeviceInput!, condition: ModelUserDeviceConditionInput): UserDevice
+  deleteUserDevice(input: DeleteUserDeviceInput!, condition: ModelUserDeviceConditionInput): UserDevice
 }
 
 input ModelSubscriptionBabyDataFilterInput {
   deviceId: ModelSubscriptionStringInput
+  timestamp: ModelSubscriptionIntInput
   and: [ModelSubscriptionBabyDataFilterInput]
   or: [ModelSubscriptionBabyDataFilterInput]
   _deleted: ModelBooleanInput
@@ -269,4 +292,58 @@ type Subscription {
   onCreateBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["createBabyData"])
   onUpdateBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["updateBabyData"])
   onDeleteBabyData(filter: ModelSubscriptionBabyDataFilterInput): BabyData @aws_subscribe(mutations: ["deleteBabyData"])
+  onCreateUserDevice(filter: ModelSubscriptionUserDeviceFilterInput): UserDevice @aws_subscribe(mutations: ["createUserDevice"])
+  onUpdateUserDevice(filter: ModelSubscriptionUserDeviceFilterInput): UserDevice @aws_subscribe(mutations: ["updateUserDevice"])
+  onDeleteUserDevice(filter: ModelSubscriptionUserDeviceFilterInput): UserDevice @aws_subscribe(mutations: ["deleteUserDevice"])
+}
+
+type ModelUserDeviceConnection {
+  items: [UserDevice]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelUserDeviceFilterInput {
+  userID: ModelStringInput
+  deviceId: ModelStringInput
+  and: [ModelUserDeviceFilterInput]
+  or: [ModelUserDeviceFilterInput]
+  not: ModelUserDeviceFilterInput
+  _deleted: ModelBooleanInput
+}
+
+input ModelUserDeviceConditionInput {
+  userID: ModelStringInput
+  deviceId: ModelStringInput
+  and: [ModelUserDeviceConditionInput]
+  or: [ModelUserDeviceConditionInput]
+  not: ModelUserDeviceConditionInput
+  _deleted: ModelBooleanInput
+}
+
+input CreateUserDeviceInput {
+  userID: String!
+  deviceId: String!
+  id: ID
+  _version: Int
+}
+
+input UpdateUserDeviceInput {
+  userID: String
+  deviceId: String
+  id: ID!
+  _version: Int
+}
+
+input DeleteUserDeviceInput {
+  id: ID!
+  _version: Int
+}
+
+input ModelSubscriptionUserDeviceFilterInput {
+  userID: ModelSubscriptionStringInput
+  deviceId: ModelSubscriptionStringInput
+  and: [ModelSubscriptionUserDeviceFilterInput]
+  or: [ModelSubscriptionUserDeviceFilterInput]
+  _deleted: ModelBooleanInput
 }

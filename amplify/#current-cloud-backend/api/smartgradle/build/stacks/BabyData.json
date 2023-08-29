@@ -1591,6 +1591,62 @@
           ]
         }
       }
+    },
+    "transformerrootstackBabyDataQuerygetBabyDataauth0FunctionQuerygetBabyDataauth0FunctionAppSyncFunction89B6FCDEFunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "QuerygetBabyDataauth0FunctionQuerygetBabyDataauth0FunctionAppSyncFunction97A6E21B",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataQuerygetBabyDatapostAuth0FunctionQuerygetBabyDatapostAuth0FunctionAppSyncFunction5C5C3773FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "QuerygetBabyDatapostAuth0FunctionQuerygetBabyDatapostAuth0FunctionAppSyncFunctionDC3046A8",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataMutationcreateBabyDatainit0FunctionMutationcreateBabyDatainit0FunctionAppSyncFunction994E1837FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationcreateBabyDatainit0FunctionMutationcreateBabyDatainit0FunctionAppSyncFunction1DFFAC9C",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataMutationcreateBabyDataauth0FunctionMutationcreateBabyDataauth0FunctionAppSyncFunctionAF08F375FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationcreateBabyDataauth0FunctionMutationcreateBabyDataauth0FunctionAppSyncFunctionB6BA486E",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataMutationupdateBabyDatainit0FunctionMutationupdateBabyDatainit0FunctionAppSyncFunctionABC58649FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MutationupdateBabyDatainit0FunctionMutationupdateBabyDatainit0FunctionAppSyncFunction8A362CEB",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataSubscriptiononCreateBabyDataauth0FunctionSubscriptiononCreateBabyDataauth0FunctionAppSyncFunction8044E128FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SubscriptiononCreateBabyDataauth0FunctionSubscriptiononCreateBabyDataauth0FunctionAppSyncFunction4EDD19BC",
+          "FunctionId"
+        ]
+      }
+    },
+    "transformerrootstackBabyDataSubscriptionOnCreateBabyDataDataResolverFnSubscriptionOnCreateBabyDataDataResolverFnAppSyncFunction529B8450FunctionId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SubscriptionOnCreateBabyDataDataResolverFnSubscriptionOnCreateBabyDataDataResolverFnAppSyncFunction630C022E",
+          "FunctionId"
+        ]
+      }
     }
   }
 }

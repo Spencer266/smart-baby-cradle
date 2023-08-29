@@ -58,14 +58,13 @@ public class SignUp extends AppCompatActivity {
                         Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
                         progressDialog.dismiss();
 //                          If sign in fails, display a message to the user.
-//                          Toast.makeText(SignUp.this, "Đăng ký thất bại. " + error,
-//                                    Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Đăng ký thất bại. " + error, Toast.LENGTH_SHORT).show();
                     }
                 );
             }
             else {
                 Log.i("SignUp", "Sign Up Unsuccessfully: Passwords do not match!");
-                Toast.makeText(SignUp.this, "Mật khẩu không khớp" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Mật khẩu không khớp" , Toast.LENGTH_SHORT).show();
             }
         });
     }

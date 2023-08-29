@@ -13,12 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.core.Amplify;
 import com.example.notification.R;
 
 public class PasswordManager extends Fragment {
     private View mView;
-    private TextView currentPassword_edt, newPassword_edt, confirmPassword_edt;
+    private TextView currentPassword, newPassword, confirmPassword;
     private Button changePasswordButton;
     @Nullable
     @Override
@@ -26,67 +27,58 @@ public class PasswordManager extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_change_password, container, false);
         initUI();
-        changePasswordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changePassword();
-            }
-        });
+        changePasswordButton.setOnClickListener(view -> changePassword());
         return mView;
     }
 
     private void changePassword() {
 
-        String currentPassword = currentPassword_edt.getText().toString().trim();
-        String newPassword = newPassword_edt.getText().toString().trim();
-        String confirmNewPassword = confirmPassword_edt.getText().toString().trim();
+        String tmpCurrentPassword = currentPassword.getText().toString().trim();
+        String tmpNewPassword = newPassword.getText().toString().trim();
+        String tmpConfirmNewPassword = confirmPassword.getText().toString().trim();
 
-        if (newPassword.equals(confirmNewPassword)) {
+        if (tmpNewPassword.equals(tmpConfirmNewPassword)) {
             Amplify.Auth.updatePassword(
-                currentPassword,
-                    newPassword,
-                    () -> Log.i("ChangePassword", "Updated password successfully!"),
-                    error -> Log.e("ChangePassword", error.toString())
+                tmpCurrentPassword,
+                    tmpNewPassword,
+                    () -> {
+                        Log.i("ChangePassword", "Updated password successfully!");
+
+                        try {
+                            getActivity().runOnUiThread(() -> Toast.makeText(
+                                    getActivity(),
+                                    "Updated password successfully!",
+                                    Toast.LENGTH_SHORT
+                            ));
+                        } catch (NullPointerException e) {
+                            Log.e("ChangePassword", "Can not show toast message", e);
+                        }
+
+                    },
+                    error -> {
+                        Log.e("ChangePassword", "Could not update password: " + error);
+
+                        try {
+                            getActivity().runOnUiThread(() -> Toast.makeText(
+                                    getActivity(),
+                                    error.getCause().toString(),
+                                    Toast.LENGTH_SHORT).show()
+                            );
+                        } catch (NullPointerException e) {
+                            Log.e("ChangePassword", "Can not show toast message", e);
+                        }
+                    }
             );
         } else {
             Log.i("ChangePassword", "New password and confirm new password do not match!");
-            Toast.makeText(getActivity(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
         }
-//        if (newPassword.equals(confirmPassword)) {
-//            // Xác minh đăng nhập bằng mật khẩu hiện tại trước khi thay đổi mật khẩu
-//            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
-//            user.reauthenticate(credential)
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//                                // Xác thực thành công, thay đổi mật khẩu mới
-//                                user.updatePassword(newPassword)
-//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<Void> task) {
-//                                                if (task.isSuccessful()) {
-//                                                    Toast.makeText(getActivity(), "Change Success", Toast.LENGTH_SHORT).show();
-//                                                } else {
-//                                                    Toast.makeText(getActivity(), "Change Fail", Toast.LENGTH_SHORT).show();
-//                                                }
-//                                            }
-//                                        });
-//                            } else {
-//                                // Xác thực thất bại, mật khẩu hiện tại không chính xác
-//                                Toast.makeText(getActivity(), "Authentication Failed", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(getActivity(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
-//        }
     }
 
     private void initUI() {
-        currentPassword_edt = mView.findViewById(R.id.PasswordManager_currentPassword);
-        newPassword_edt = mView.findViewById(R.id.PasswordManager_newPassword);
-        confirmPassword_edt = mView.findViewById(R.id.PasswordManager_confirmPassword);
+        currentPassword = mView.findViewById(R.id.PasswordManager_currentPassword);
+        newPassword = mView.findViewById(R.id.PasswordManager_newPassword);
+        confirmPassword = mView.findViewById(R.id.PasswordManager_confirmPassword);
         changePasswordButton = mView.findViewById(R.id.PasswordManager_changePasswordButton);
     }
 }

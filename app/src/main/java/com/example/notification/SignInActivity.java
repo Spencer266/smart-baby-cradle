@@ -75,7 +75,7 @@ public class SignInActivity extends AppCompatActivity {
                     progressDialog.dismiss();
 
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(SignInActivity.this, "Đăng nhập thất bại. ",
+                    Toast.makeText(this, "Đăng nhập thất bại. ",
                             Toast.LENGTH_SHORT).show();
                 }
             },

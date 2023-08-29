@@ -27,9 +27,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void onClickResetButton() {
         Log.i("ForgotPasswordActivity", "Calling onClickResetButton");
 
-//        resetButton.setOnClickListener(view -> {
-//            Toast.makeText(this, "This function has not been implemented yet!", Toast.LENGTH_LONG).show();
-//        });
+        resetButton.setOnClickListener(view -> {
+            Toast.makeText(this, "This function has not been implemented yet!", Toast.LENGTH_LONG).show();
+        });
     }
 
     private void initUI() {

@@ -12,12 +12,15 @@
     <TextView
         android:id="@+id/VerifyActivity_verificationMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="2dp"
+        android:text="A verification code has been sent to a@gmail.com"/>
     <EditText
         android:id="@+id/VerifyActivity_verificationCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mã xác nhận"
+        android:hint="Confirmation code"
         android:imeOptions="actionNext"
         android:inputType="phone|numberDecimal"/>
 
@@ -25,17 +28,14 @@
         android:id="@+id/VerifyActivity_confirmButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xác nhận"
+        android:layout_marginBottom="10dp"
+        android:text="Verify"
         android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/VerifyActivity_resendVerificationCodeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chưa nhận được mã? Gửi lại?"/>
-
-
-
-
+        android:text="Did not receive a code? Resent a new one!"/>
 
 </LinearLayout>

@@ -3,6 +3,7 @@
 subscription OnCreateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
   onCreateBabyData(filter: $filter) {
     deviceId
+    timestamp
     bracelet {
       heartBeats
       oxygen
@@ -36,6 +37,7 @@ subscription OnCreateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
 subscription OnUpdateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
   onUpdateBabyData(filter: $filter) {
     deviceId
+    timestamp
     bracelet {
       heartBeats
       oxygen
@@ -69,6 +71,7 @@ subscription OnUpdateBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
 subscription OnDeleteBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
   onDeleteBabyData(filter: $filter) {
     deviceId
+    timestamp
     bracelet {
       heartBeats
       oxygen
@@ -89,6 +92,54 @@ subscription OnDeleteBabyData($filter: ModelSubscriptionBabyDataFilterInput) {
       acTemp
       __typename
     }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+subscription OnCreateUserDevice(
+  $filter: ModelSubscriptionUserDeviceFilterInput
+) {
+  onCreateUserDevice(filter: $filter) {
+    userID
+    deviceId
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+subscription OnUpdateUserDevice(
+  $filter: ModelSubscriptionUserDeviceFilterInput
+) {
+  onUpdateUserDevice(filter: $filter) {
+    userID
+    deviceId
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+subscription OnDeleteUserDevice(
+  $filter: ModelSubscriptionUserDeviceFilterInput
+) {
+  onDeleteUserDevice(filter: $filter) {
+    userID
+    deviceId
     id
     createdAt
     updatedAt

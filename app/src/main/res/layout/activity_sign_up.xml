@@ -21,7 +21,7 @@
         android:id="@+id/SignUp_userPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Mật khẩu"
+        android:hint="Password"
         android:inputType="textPassword"
         android:imeOptions="actionDone"
         />
@@ -30,7 +30,7 @@
         android:id="@+id/SignUp_userConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập lại mật khẩu"
+        android:hint="Confirm Password"
         android:inputType="textPassword"
         android:imeOptions="actionDone"
         />
@@ -39,7 +39,7 @@
         android:id="@+id/SignUp_signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng ký"
+        android:text="Register"
         android:layout_marginTop="30dp"/>
 
 </LinearLayout>

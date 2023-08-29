@@ -1,5 +1,6 @@
 type BabyData @model @auth(rules: [{ allow: public }]) {
-  deviceId : String
+  deviceId: String!
+  timestamp: Int!
   bracelet: Bracelet
   cradle: Cradle
   controller: Controller
@@ -23,4 +24,9 @@ type Controller {
   playingMusic: Boolean
   humidifier: Boolean
   acTemp: Float
+}
+
+type UserDevice @model @auth(rules: [{ allow: public}]) {
+  userID: String!
+  deviceId: String!
 }

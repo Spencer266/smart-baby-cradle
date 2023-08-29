@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setupToolbar() {
+        Log.i("MainActivity", "Calling setupToolbar");
         Toolbar toolbar = findViewById(R.id.MainActivity_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
                Log.i("SignOut", "Successfully signed out!");
            } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
-               Log.i("SignOut", "Paritial signed out!");
+               Log.i("SignOut", "Partial signed out!");
 
                AWSCognitoAuthSignOutResult.PartialSignOut partialSignOutResult
                        = (AWSCognitoAuthSignOutResult.PartialSignOut) signOutResult;
