@@ -1,6 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.temporal.Temporal;
+import com.amplifyframework.core.model.ModelIdentifier;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,12 +29,16 @@ public final class UserDevice implements Model {
   public static final QueryField ID = field("UserDevice", "id");
   public static final QueryField USER_ID = field("UserDevice", "userID");
   public static final QueryField DEVICE_ID = field("UserDevice", "deviceId");
+  public static final QueryField MAPPING_NAME = field("UserDevice", "mappingName");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String userID;
   private final @ModelField(targetType="String", isRequired = true) String deviceId;
+  private final @ModelField(targetType="String") String mappingName;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
-  public String resolveIdentifier() {
+  /** @deprecated This API is internal to Amplify and should not be used. */
+  @Deprecated
+   public String resolveIdentifier() {
     return id;
   }
   
@@ -49,6 +54,10 @@ public final class UserDevice implements Model {
       return deviceId;
   }
   
+  public String getMappingName() {
+      return mappingName;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -57,10 +66,11 @@ public final class UserDevice implements Model {
       return updatedAt;
   }
   
-  private UserDevice(String id, String userID, String deviceId) {
+  private UserDevice(String id, String userID, String deviceId, String mappingName) {
     this.id = id;
     this.userID = userID;
     this.deviceId = deviceId;
+    this.mappingName = mappingName;
   }
   
   @Override
@@ -74,6 +84,7 @@ public final class UserDevice implements Model {
       return ObjectsCompat.equals(getId(), userDevice.getId()) &&
               ObjectsCompat.equals(getUserId(), userDevice.getUserId()) &&
               ObjectsCompat.equals(getDeviceId(), userDevice.getDeviceId()) &&
+              ObjectsCompat.equals(getMappingName(), userDevice.getMappingName()) &&
               ObjectsCompat.equals(getCreatedAt(), userDevice.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), userDevice.getUpdatedAt());
       }
@@ -85,6 +96,7 @@ public final class UserDevice implements Model {
       .append(getId())
       .append(getUserId())
       .append(getDeviceId())
+      .append(getMappingName())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -98,6 +110,7 @@ public final class UserDevice implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("userID=" + String.valueOf(getUserId()) + ", ")
       .append("deviceId=" + String.valueOf(getDeviceId()) + ", ")
+      .append("mappingName=" + String.valueOf(getMappingName()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -120,6 +133,7 @@ public final class UserDevice implements Model {
     return new UserDevice(
       id,
       null,
+      null,
       null
     );
   }
@@ -127,7 +141,8 @@ public final class UserDevice implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       userID,
-      deviceId);
+      deviceId,
+      mappingName);
   }
   public interface UserIdStep {
     DeviceIdStep userId(String userId);
@@ -142,6 +157,7 @@ public final class UserDevice implements Model {
   public interface BuildStep {
     UserDevice build();
     BuildStep id(String id);
+    BuildStep mappingName(String mappingName);
   }
   
 
@@ -149,6 +165,7 @@ public final class UserDevice implements Model {
     private String id;
     private String userID;
     private String deviceId;
+    private String mappingName;
     @Override
      public UserDevice build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -156,7 +173,8 @@ public final class UserDevice implements Model {
         return new UserDevice(
           id,
           userID,
-          deviceId);
+          deviceId,
+          mappingName);
     }
     
     @Override
@@ -173,6 +191,12 @@ public final class UserDevice implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep mappingName(String mappingName) {
+        this.mappingName = mappingName;
+        return this;
+    }
+    
     /**
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -185,10 +209,11 @@ public final class UserDevice implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String userId, String deviceId) {
+    private CopyOfBuilder(String id, String userId, String deviceId, String mappingName) {
       super.id(id);
       super.userId(userId)
-        .deviceId(deviceId);
+        .deviceId(deviceId)
+        .mappingName(mappingName);
     }
     
     @Override
@@ -199,6 +224,19 @@ public final class UserDevice implements Model {
     @Override
      public CopyOfBuilder deviceId(String deviceId) {
       return (CopyOfBuilder) super.deviceId(deviceId);
+    }
+    
+    @Override
+     public CopyOfBuilder mappingName(String mappingName) {
+      return (CopyOfBuilder) super.mappingName(mappingName);
+    }
+  }
+  
+
+  public static class UserDeviceIdentifier extends ModelIdentifier<UserDevice> {
+    private static final long serialVersionUID = 1L;
+    public UserDeviceIdentifier(String id) {
+      super(id);
     }
   }
   

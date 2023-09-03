@@ -118,6 +118,7 @@ mutation CreateUserDevice(
   createUserDevice(input: $input, condition: $condition) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt
@@ -135,6 +136,7 @@ mutation UpdateUserDevice(
   updateUserDevice(input: $input, condition: $condition) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt
@@ -152,6 +154,7 @@ mutation DeleteUserDevice(
   deleteUserDevice(input: $input, condition: $condition) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt

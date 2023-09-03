@@ -35,6 +35,7 @@ type Controller {
 type UserDevice {
   userID: String!
   deviceId: String!
+  mappingName: String
   id: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -306,6 +307,7 @@ type ModelUserDeviceConnection {
 input ModelUserDeviceFilterInput {
   userID: ModelStringInput
   deviceId: ModelStringInput
+  mappingName: ModelStringInput
   and: [ModelUserDeviceFilterInput]
   or: [ModelUserDeviceFilterInput]
   not: ModelUserDeviceFilterInput
@@ -315,6 +317,7 @@ input ModelUserDeviceFilterInput {
 input ModelUserDeviceConditionInput {
   userID: ModelStringInput
   deviceId: ModelStringInput
+  mappingName: ModelStringInput
   and: [ModelUserDeviceConditionInput]
   or: [ModelUserDeviceConditionInput]
   not: ModelUserDeviceConditionInput
@@ -324,6 +327,7 @@ input ModelUserDeviceConditionInput {
 input CreateUserDeviceInput {
   userID: String!
   deviceId: String!
+  mappingName: String
   id: ID
   _version: Int
 }
@@ -331,6 +335,7 @@ input CreateUserDeviceInput {
 input UpdateUserDeviceInput {
   userID: String
   deviceId: String
+  mappingName: String
   id: ID!
   _version: Int
 }
@@ -343,6 +348,7 @@ input DeleteUserDeviceInput {
 input ModelSubscriptionUserDeviceFilterInput {
   userID: ModelSubscriptionStringInput
   deviceId: ModelSubscriptionStringInput
+  mappingName: ModelSubscriptionStringInput
   and: [ModelSubscriptionUserDeviceFilterInput]
   or: [ModelSubscriptionUserDeviceFilterInput]
   _deleted: ModelBooleanInput

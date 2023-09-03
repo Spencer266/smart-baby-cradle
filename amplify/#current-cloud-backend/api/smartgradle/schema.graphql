@@ -1,4 +1,4 @@
-type BabyData @model @auth(rules: [{ allow: public }]) {
+type BabyData @model @auth( rules: [{ allow: public}] ) {
   deviceId: String!
   timestamp: Int!
   bracelet: Bracelet
@@ -29,4 +29,5 @@ type Controller {
 type UserDevice @model @auth(rules: [{ allow: public}]) {
   userID: String!
   deviceId: String!
+  mappingName: String
 }

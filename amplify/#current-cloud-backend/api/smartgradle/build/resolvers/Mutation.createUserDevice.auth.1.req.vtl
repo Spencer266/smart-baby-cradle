@@ -6,6 +6,9 @@ $util.qr($ctx.stash.put("hasAuth", true))
 #if( $util.authType() == "API Key Authorization" )
   #set( $isAuthorized = true )
 #end
+#if( $util.authType() == "User Pool Authorization" )
+
+#end
 #if( !$isAuthorized && $allowedFields.isEmpty() )
 $util.unauthorized()
 #end

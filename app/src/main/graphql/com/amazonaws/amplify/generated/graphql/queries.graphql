@@ -130,6 +130,7 @@ query GetUserDevice($id: ID!) {
   getUserDevice(id: $id) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt
@@ -149,6 +150,7 @@ query ListUserDevices(
     items {
       userID
       deviceId
+      mappingName
       id
       createdAt
       updatedAt
@@ -178,6 +180,7 @@ query SyncUserDevices(
     items {
       userID
       deviceId
+      mappingName
       id
       createdAt
       updatedAt

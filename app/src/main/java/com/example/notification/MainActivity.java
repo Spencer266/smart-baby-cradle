@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ImageView userAvatar;
     private TextView username, userEmail;
+    private static String userId;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initUI();
         setupToolbar();
 
-        replaceFragment(new Home());
         navigationView.getMenu().findItem(R.id.MainActivity_nav_home).setChecked(true);
         showUserInformation();
     }
@@ -63,13 +64,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.i("MainActivity", "Choosing item: " + id);
         if (id == R.id.MainActivity_nav_home) {
             if (currentFragment != FRAGMENT_HOME) {
-                replaceFragment(new Home());
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", getUserId());
+                Home nextFragment = new Home();
+                nextFragment.setArguments(bundle);
+                replaceFragment(nextFragment);
                 currentFragment = FRAGMENT_HOME;
             }
         }
         else if (id == R.id.MainActivity_nav_adding_device) {
             if (currentFragment != FRAGMENT_ADDING_DEVICE) {
-                replaceFragment(new DeviceManager());
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", getUserId());
+                DeviceManager nextFragment = new DeviceManager();
+                nextFragment.setArguments(bundle);
+                replaceFragment(nextFragment);
                 currentFragment = FRAGMENT_ADDING_DEVICE;
             }
         }
@@ -133,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 authUser -> {
                                     Log.i("getCurrentUser", authUser.getUsername());
                                     String currentUserEmail = authUser.getUsername(), currentUsername = "";
+                                    userId = authUser.getUserId();
                                     for (int i = 0; i < currentUserEmail.length(); i++) {
                                         if (currentUserEmail.charAt(i) == '@') {
                                             break;
@@ -141,6 +151,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     username.setText(currentUsername);
                                     userEmail.setText(currentUserEmail);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("userId", authUser.getUserId());
+                                    Home nextFragment = new Home();
+                                    nextFragment.setArguments(bundle);
+                                    replaceFragment(nextFragment);
                                 },
                                 error -> Log.e("getCurrentUser", "Something is not right?", error)
                         );
@@ -213,6 +229,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            }
         });
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
     private void initUI(){
         Log.i("MainActivity", "Calling initial");
 

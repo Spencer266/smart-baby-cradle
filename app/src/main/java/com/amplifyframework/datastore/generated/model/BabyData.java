@@ -1,6 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.temporal.Temporal;
+import com.amplifyframework.core.model.ModelIdentifier;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +40,9 @@ public final class BabyData implements Model {
   private final @ModelField(targetType="Controller") Controller controller;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
-  public String resolveIdentifier() {
+  /** @deprecated This API is internal to Amplify and should not be used. */
+  @Deprecated
+   public String resolveIdentifier() {
     return id;
   }
   
@@ -280,6 +283,14 @@ public final class BabyData implements Model {
     @Override
      public CopyOfBuilder controller(Controller controller) {
       return (CopyOfBuilder) super.controller(controller);
+    }
+  }
+  
+
+  public static class BabyDataIdentifier extends ModelIdentifier<BabyData> {
+    private static final long serialVersionUID = 1L;
+    public BabyDataIdentifier(String id) {
+      super(id);
     }
   }
   

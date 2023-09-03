@@ -4,6 +4,9 @@
       "Type": "String",
       "Default": "NONE"
     },
+    "AuthCognitoUserPoolId": {
+      "Type": "String"
+    },
     "AppSyncApiName": {
       "Type": "String",
       "Default": "AppSyncSimpleTransform"
@@ -72,7 +75,20 @@
               }
             ]
           ]
-        }
+        },
+        "AdditionalAuthenticationProviders": [
+          {
+            "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "UserPoolConfig": {
+              "AwsRegion": {
+                "Ref": "AWS::Region"
+              },
+              "UserPoolId": {
+                "Ref": "AuthCognitoUserPoolId"
+              }
+            }
+          }
+        ]
       }
     },
     "GraphQLAPITransformerSchema3CB2AE18": {
@@ -111,7 +127,8 @@
             "ApiId"
           ]
         },
-        "Expires": 1693887523
+        "Description": "03/09/2023 API Key for GraphQL",
+        "Expires": 1725274865
       }
     },
     "GraphQLAPINONEDS95A13CF0": {

@@ -108,6 +108,7 @@ subscription OnCreateUserDevice(
   onCreateUserDevice(filter: $filter) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt
@@ -124,6 +125,7 @@ subscription OnUpdateUserDevice(
   onUpdateUserDevice(filter: $filter) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt
@@ -140,6 +142,7 @@ subscription OnDeleteUserDevice(
   onDeleteUserDevice(filter: $filter) {
     userID
     deviceId
+    mappingName
     id
     createdAt
     updatedAt

@@ -9,13 +9,19 @@
     android:gravity="center">
 
     <EditText
-        android:id="@+id/deviceManager_deviceID"
+        android:id="@+id/DeviceManager_deviceID"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="Enter your device ID"/>
 
+    <EditText
+        android:id="@+id/DeviceManager_mappingName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Give a unique name for this device!"/>
+
     <Button
-        android:id="@+id/deviceManager_connectButton"
+        android:id="@+id/DeviceManager_connectButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

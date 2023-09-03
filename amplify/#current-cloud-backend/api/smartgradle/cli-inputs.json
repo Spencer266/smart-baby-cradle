@@ -5,12 +5,20 @@
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 7
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2024-09-02T02:23:20.240Z",
+      "keyDescription": "03/09/2023 API Key for GraphQL"
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
       }
-    }
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authsmartgradle4672367b"
+      }
+    ]
   }
 }
