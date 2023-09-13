@@ -55,7 +55,13 @@ public class DeviceManager extends Fragment {
                                     .and(UserDevice.DEVICE_ID.eq(getUserId()))
                     ),
                     response -> {
-                        if (response.hasData()) {
+                        boolean hasEntries = false;
+                        for (UserDevice userDevice1 : response.getData()) {
+                            hasEntries = true;
+                            Log.i("ConnectButton", userDevice1.toString());
+                            break;
+                        }
+                        if (hasEntries) {
                             try {
                                 getActivity().runOnUiThread(() -> Toast.makeText(
                                         getActivity(),

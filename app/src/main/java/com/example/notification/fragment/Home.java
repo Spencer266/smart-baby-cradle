@@ -9,27 +9,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.amplifyframework.api.ApiOperation;
-import com.amplifyframework.api.aws.GsonVariablesSerializer;
-import com.amplifyframework.api.graphql.GraphQLRequest;
-import com.amplifyframework.api.graphql.SimpleGraphQLRequest;
-import com.amplifyframework.api.graphql.model.ModelPagination;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.api.graphql.model.ModelSubscription;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.BabyData;
 import com.amplifyframework.datastore.generated.model.UserDevice;
 import com.example.notification.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class Home extends Fragment {
     private View View;
@@ -46,8 +40,25 @@ public class Home extends Fragment {
 
         initUI();
         onClickDeviceChooser();
+        beginSubscription();
 
         return View;
+    }
+
+    private void beginSubscription() {
+         Amplify.API.subscribe(
+                ModelSubscription.onCreate(BabyData.class),
+                onEstablished -> Log.i("beginSubscription", "Subscription established"),
+                onCreated -> {
+                    Log.i("beginSubscription", "Todo create subscription received: " + ((BabyData) onCreated.getData()).getDeviceId());
+                    if (currentDevice.equals(((BabyData) onCreated.getData()).getDeviceId())) {
+                        displayBabyData((BabyData) onCreated.getData());
+                    }
+                },
+                onFailure -> Log.e("beginSubscription", "Subscription failed", onFailure),
+                () -> Log.i("beginSubscription", "Subscription completed")
+         );
+
     }
 
     private void onClickDeviceChooser() {
