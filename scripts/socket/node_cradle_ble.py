@@ -1,12 +1,15 @@
+import json
 import os
 import socket
 import sys
 
-sys.path.append('../ML')
+sys.path.append('scripts/ML')
 from predict import Predictor
 from multiprocessing.connection import Client
 
-FILE_PATH = '../../data/FTP/files/record.wav'
+FILE_PATH = 'data/FTP/files/record.wav'
+
+print("-----Node Socket-----")
 
 # Set up TCP socket
 host = ('0.0.0.0', 6005)
@@ -21,8 +24,8 @@ print(f"Connected to {client_address}")
 print()
 
 # Initialize IPC
-# cloud_proc_addr = ('localhost', 6001)
-# cloud_proc_conn = Client(cloud_proc_addr, authkey=b'pass')
+cloud_proc_addr = ('localhost', 6001)
+cloud_proc_conn = Client(cloud_proc_addr, authkey=b'pass')
 
 
 # Cry machine learning model setup
@@ -53,9 +56,9 @@ while True:
 
         print(data)
 
-        # pack = json.dumps(data)
-        # cloud_proc_conn.send(pack)
+        pack = json.dumps(data)
+        cloud_proc_conn.send(pack)
 
     except KeyboardInterrupt:
-        # cloud_proc_conn.close()
+        cloud_proc_conn.close()
         client_socket.close()

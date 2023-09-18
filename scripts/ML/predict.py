@@ -19,7 +19,7 @@ FILE_PATH = '../../data/FTP/files/record.wav'
 
 class Predictor:
     def __init__(self):
-        self.loaded_model = joblib.load('../ML/knn_model.pkl')
+        self.loaded_model = joblib.load('scripts/ML/knn_model.pkl')
 
     def calculate_rms_energy(self, frame):
         return np.sqrt(np.mean(np.square(frame)))
