@@ -20,6 +20,7 @@ OXY_CHAR_UUID = "61a885a4-41c3-60d0-9a53-6d652a70d29c"
 TEMP_CHAR_UUID = "d73e07fd-6061-4c37-80dd-b54224c437e6"
 IPC_PORT = 6000
 
+print("BLE")
 # Connect BLE
 BLE_status = bluetooth_constants.RESULT_EXCEPTION
 while BLE_status != bluetooth_constants.RESULT_OK:
@@ -64,8 +65,16 @@ while True:
     try:
         pack = json.dumps(data)
         proc_conn.send(pack)
-        time.sleep(2)
+        
+        print("Pack sent")
+        time.sleep(5)
+    except Exception as e:
+        print(str(e))
     except KeyboardInterrupt:
-        proc_conn.close()
-        bluetooth_gap.disconnect(DEV_ADDR)
-        break
+        print("Keyboard Cancel")
+    except ConnectionResetError:
+        print("Connection reset by peer")
+    # finally:
+    #     proc_conn.close()
+    #     bluetooth_gap.disconnect(DEV_ADDR)
+    #     break

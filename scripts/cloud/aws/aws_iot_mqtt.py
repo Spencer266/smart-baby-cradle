@@ -3,6 +3,7 @@ import time
 import json
 from awsiot import mqtt_connection_builder
 from awscrt import mqtt
+from multiprocessing.connection import Listener
 
 arg_endpoint = os.environ['AWS_DEVICE_ENDPOINT']
 arg_cert = os.environ['AWS_DEVICE_CERTIFICATE_PATH']
@@ -62,60 +63,78 @@ mqtt_connection = mqtt_connection_builder.mtls_from_path(
     keep_alive_secs=10
 )
 
-
 # Connecting to IoT Core
 print("Connecting... ", end='')
 mqtt_connection.connect().result()
 print("Done!")
 
 
-# Subscribing to topics
-subscribe_future, packet_id = mqtt_connection.subscribe(
-    topic="device/+/data",
-    qos=mqtt.QoS.AT_LEAST_ONCE,
-    callback=on_message_received
-)
-subscribe_future.result()
-print("Subscribed to topic device/+/data")
+# Initialize IPC
+bracelet_addr = ('localhost', 6000)
+cradle_addr = ('localhost', 6001)
+
+bracelet_lis = Listener(bracelet_addr, authkey=b'pass')
+cradle_lis = Listener(cradle_addr, authkey=b'pass')
+
+bracelet_conn = bracelet_lis.accept()
+print("Bracelet process accepted")
+cradle_conn = cradle_lis.accept()
+print("Cradle process accepted")
 
 
-subscribe_future, packet_id = mqtt_connection.subscribe(
-    topic="device/data/temp",
-    qos=mqtt.QoS.AT_LEAST_ONCE,
-    callback=on_message_received
-)
-subscribe_future.result
-print("Subscribed to topic device/data/temp")
-print("\nListening...")
-
-
-# Publishing to topics
-for i in range(0, 1):
-    message = {
-        "temperature": 38,
-        "humidity": 80,
-        "barometer": 1013,
-        "wind": {
-            "velocity": 22,
-            "bearing": 255
-        }
+message = {
+    "bracelet": {
+        "heart-beats": 90,
+        "oxygen": 80,
+        "temperature": 36.8
+    },
+    "cradle": {
+        "env-temp": 29.3,
+        "humidity": 74.6,
+        "cry": "crying"
     }
-    message_json = json.dumps(message)
+}
 
-    mqtt_connection.publish(
-        topic="device/32/data",
-        payload=message_json,
-        qos=mqtt.QoS.AT_LEAST_ONCE
-    )
+# Publishing data
+while True:
+    try:
+        while not bracelet_conn.readable:
+            pass
+        bracelet_msg = bracelet_conn.recv()
 
-    print(f"Message {i} published")
+        while not cradle_conn.readable:
+            pass
+        cradle_msg = cradle_conn.recv()
 
-    time.sleep(1)
-try:
-    while True:
+        message["bracelet"] = json.loads(bracelet_msg)
+        message["cradle"] = json.loads(cradle_msg)
+
+        message_json = json.dumps(message)
+
+        mqtt_connection.publish(
+            topic="pi/data",
+            payload=message_json,
+            qos=mqtt.QoS.AT_LEAST_ONCE
+        )
+
+        print(f"Message published")
+
+        time.sleep(5)
+
+    except Exception as e:
+        print(str(e))
+
+    except KeyboardInterrupt:
         pass
 
-except KeyboardInterrupt:
-    print("\nDisconnecting... ", end='')
-    mqtt_connection.disconnect().result()
-    print("Done!")
+    # finally:
+    #     bracelet_conn.close()
+    #     bracelet_lis.close()
+
+    #     cradle_conn.close()
+    #     cradle_lis.close()
+
+    #     print("\nDisconnecting... ", end='')
+    #     mqtt_connection.disconnect().result()
+    #     print("Done!")
+    #     break
