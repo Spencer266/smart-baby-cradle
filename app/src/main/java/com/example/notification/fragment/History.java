@@ -75,46 +75,38 @@ public class History extends Fragment {
                     ModelMutation.create(babyData),
                     response -> {
                         Log.i("API", "Successfully pushed baby data to cloud with id: " + response);
-                        try {
-                            getActivity().runOnUiThread(() -> Toast.makeText(
-                                    getActivity(),
-                                    "Successfully pushed baby data to cloud!",
-                                    Toast.LENGTH_SHORT).show()
-                            );
-                        } catch (NullPointerException e) {
-                            Log.e("API", "Can not show toast message", e);
-                        }
+                        ToastMessage.showToastMessage(
+                                getActivity(),
+                                "Successfully pushed baby data to cloud!",
+                                "onClickPushButton"
+                        );
                     },
                     error -> {
                         Log.e("API", "Failed to pushed baby data to cloud", error);
-                        try {
-                            getActivity().runOnUiThread(() -> Toast.makeText(
-                                    getActivity(),
-                                    "Something went wrong when pushing data to cloud",
-                                    Toast.LENGTH_SHORT).show()
-                            );
-                        } catch (NullPointerException e) {
-                            Log.e("API", "Can not show toast message", e);
-                        }
+                        ToastMessage.showToastMessage(
+                                getActivity(),
+                                "Something went wrong when pushing data to cloud",
+                                "onClickPushButton"
+                        );
                     }
             );
         });
     }
 
     private void initUI() {
-        deviceID        = view.findViewById(R.id.History_deviceID);
-        timestamp       = view.findViewById(R.id.History_timestamp);
-        heartBeats      = view.findViewById(R.id.History_heartBeats);
-        oxygen          = view.findViewById(R.id.History_oxygen);
-        temperature     = view.findViewById(R.id.History_temperature);
+        deviceID = view.findViewById(R.id.History_deviceID);
+        timestamp = view.findViewById(R.id.History_timestamp);
+        heartBeats = view.findViewById(R.id.History_heartBeats);
+        oxygen = view.findViewById(R.id.History_oxygen);
+        temperature = view.findViewById(R.id.History_temperature);
         environmentTemp = view.findViewById(R.id.History_environmentTemp);
-        humidity        = view.findViewById(R.id.History_humidity);
-        cry             = view.findViewById(R.id.History_cry);
-        fanSpeed        = view.findViewById(R.id.History_fanSpeed);
-        swaying         = view.findViewById(R.id.History_swaying);
-        playingMusic    = view.findViewById(R.id.History_playingMusic);
-        humidifier      = view.findViewById(R.id.History_humidifier);
-        acTemp          = view.findViewById(R.id.History_acTemp);
-        pushButton      = view.findViewById(R.id.History_pushButton);
+        humidity = view.findViewById(R.id.History_humidity);
+        cry = view.findViewById(R.id.History_cry);
+        fanSpeed = view.findViewById(R.id.History_fanSpeed);
+        swaying = view.findViewById(R.id.History_swaying);
+        playingMusic = view.findViewById(R.id.History_playingMusic);
+        humidifier = view.findViewById(R.id.History_humidifier);
+        acTemp = view.findViewById(R.id.History_acTemp);
+        pushButton = view.findViewById(R.id.History_pushButton);
     }
 }

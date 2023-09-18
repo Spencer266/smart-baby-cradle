@@ -50,10 +50,7 @@ public class Home extends Fragment {
                 ModelSubscription.onCreate(BabyData.class),
                 onEstablished -> Log.i("beginSubscription", "Subscription established"),
                 onCreated -> {
-                    Log.i("beginSubscription", "Todo create subscription received: " + ((BabyData) onCreated.getData()).getDeviceId());
-                    if (currentDevice.equals(((BabyData) onCreated.getData()).getDeviceId())) {
-                        displayBabyData((BabyData) onCreated.getData());
-                    }
+                    showDeviceData();
                 },
                 onFailure -> Log.e("beginSubscription", "Subscription failed", onFailure),
                 () -> Log.i("beginSubscription", "Subscription completed")
@@ -122,9 +119,14 @@ public class Home extends Fragment {
                     Log.i("showDeviceData", "Current device: " + currentDevice);
                     if (response.hasData()) {
                         Log.i("showDeviceData", "Have some data");
+                        int timeStamp = 0;
                         for (BabyData babyData : response.getData()) {
-                            displayBabyData(babyData);
-                            break;
+                            timeStamp = Math.max(timeStamp, babyData.getTimestamp());
+                        }
+                        for (BabyData babyData : response.getData()) {
+                            if (timeStamp == babyData.getTimestamp()) {
+                                displayBabyData(babyData);
+                            }
                         }
                     }
                 },

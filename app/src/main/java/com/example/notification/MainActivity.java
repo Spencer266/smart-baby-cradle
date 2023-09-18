@@ -62,47 +62,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.i("MainActivity", "Calling onNavigationItemSelected");
         int id = item.getItemId();
         Log.i("MainActivity", "Choosing item: " + id);
-        if (id == R.id.MainActivity_nav_home) {
-            if (currentFragment != FRAGMENT_HOME) {
-                Bundle bundle = new Bundle();
-                bundle.putString("userId", getUserId());
-                Home nextFragment = new Home();
-                nextFragment.setArguments(bundle);
-                replaceFragment(nextFragment);
-                currentFragment = FRAGMENT_HOME;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (id == R.id.MainActivity_nav_home) {
+                    if (currentFragment != FRAGMENT_HOME) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userId", getUserId());
+                        Home nextFragment = new Home();
+                        nextFragment.setArguments(bundle);
+                        replaceFragment(nextFragment);
+                        currentFragment = FRAGMENT_HOME;
+                    }
+                }
+                else if (id == R.id.MainActivity_nav_adding_device) {
+                    if (currentFragment != FRAGMENT_ADDING_DEVICE) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userId", getUserId());
+                        DeviceManager nextFragment = new DeviceManager();
+                        nextFragment.setArguments(bundle);
+                        replaceFragment(nextFragment);
+                        currentFragment = FRAGMENT_ADDING_DEVICE;
+                    }
+                }
+                else if (id == R.id.MainActivity_nav_history) {
+                    if (currentFragment != FRAGMENT_HISTORY) {
+                        replaceFragment(new History());
+                        currentFragment = FRAGMENT_HISTORY;
+                    }
+                }
+                else if(id == R.id.MainActivity_nav_change_password) {
+                    if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
+                        replaceFragment(new PasswordManager());
+                        currentFragment = FRAGMENT_CHANGE_PASSWORD;
+                    }
+                }
             }
-        }
-        else if (id == R.id.MainActivity_nav_adding_device) {
-            if (currentFragment != FRAGMENT_ADDING_DEVICE) {
-                Bundle bundle = new Bundle();
-                bundle.putString("userId", getUserId());
-                DeviceManager nextFragment = new DeviceManager();
-                nextFragment.setArguments(bundle);
-                replaceFragment(nextFragment);
-                currentFragment = FRAGMENT_ADDING_DEVICE;
-            }
-        }
-        else if (id == R.id.MainActivity_nav_history) {
-            if (currentFragment != FRAGMENT_HISTORY) {
-                replaceFragment(new History());
-                currentFragment = FRAGMENT_HISTORY;
-            }
-        }
-        else if(id == R.id.MainActivity_nav_change_password){
-            if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
-                replaceFragment(new PasswordManager());
-                currentFragment = FRAGMENT_CHANGE_PASSWORD;
-            }
-        }
-        else if(id == R.id.MainActivity_nav_signOut){
+        });
+
+        if(id == R.id.MainActivity_nav_signOut){
             signOut();
 
-            Intent intent = new Intent(this, SignInActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
             startActivity(intent);
             finish();
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

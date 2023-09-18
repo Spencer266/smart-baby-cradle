@@ -14,8 +14,10 @@ import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 
-public class SignUp extends AppCompatActivity {
-
+/*
+    This class is a class
+*/
+public class SignUpActivity extends AppCompatActivity {
     private EditText userEmail, userPassword, userConfirmPassword;
     private Button signUp;
     private ProgressDialog progressDialog;
@@ -47,7 +49,6 @@ public class SignUp extends AppCompatActivity {
                     result -> {
                         Log.i("SignUp", "Sign Up successfully: " + result);
                         progressDialog.dismiss();
-                        // Sign in success, update UI with the signed-in user's information
                         Intent intent = new Intent(this, VerifyActivity.class);
                         intent.putExtra("userEmail", getUserEmail());
                         intent.putExtra("resendVerificationEmail", "No");
@@ -57,7 +58,6 @@ public class SignUp extends AppCompatActivity {
                     error -> {
                         Log.i("SignUp", "Sign Up Unsuccessfully: " + error);
                         progressDialog.dismiss();
-//                          If sign in fails, display a message to the user.
                         Toast.makeText(this, "Đăng ký thất bại. " + error, Toast.LENGTH_SHORT).show();
                     }
                 );

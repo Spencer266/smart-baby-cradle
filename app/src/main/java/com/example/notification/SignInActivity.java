@@ -25,7 +25,7 @@ public class SignInActivity extends AppCompatActivity {
         Log.i("SignInActivity", "Calling onCreate");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in_acitivity);
+        setContentView(R.layout.activity_sign_in);
         initUI();
         userSignUp();
         userChangePassword();
@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     private void userSignUp() {
         Log.i("SignInActivity", "Calling userSignUp");
         signUp.setOnClickListener(view -> {
-            Intent intent = new Intent(SignInActivity.this, SignUp.class);
+            Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
             startActivity(intent);
             finish();
         });

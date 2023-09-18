@@ -87,27 +87,18 @@ public class DeviceManager extends Fragment {
                 ModelMutation.create(userDevice),
                 response -> {
                     Log.i("AddingDevice", "Successfully connect to device with id: " + response.getData().getId());
-
-                    try {
-                        getActivity().runOnUiThread(() -> Toast.makeText(
-                                getActivity(),
-                                "Successfully connected to device: " + response.getData().getDeviceId(),
-                                Toast.LENGTH_SHORT).show()
-                        );
-                    } catch (NullPointerException e) {
-                        Log.e("AddingDevice", "Can not show toast message", e);
-                    }
+                    ToastMessage.showToastMessage(
+                            getActivity(),
+                            "Successfully connected to device: " + response.getData().getDeviceId(),
+                            "addDevice"
+                    );
                 },
                 error -> {
-                    try {
-                        getActivity().runOnUiThread(() -> Toast.makeText(
-                                getActivity(),
-                                error.getCause().toString(),
-                                Toast.LENGTH_SHORT).show()
-                        );
-                    } catch (NullPointerException e) {
-                        Log.e("AddingDevice", "Can not show toast message", e);
-                    }
+                    ToastMessage.showToastMessage(
+                            getActivity(),
+                            error.getCause().toString(),
+                            "addDevice"
+                    );
                 }
         );
     }

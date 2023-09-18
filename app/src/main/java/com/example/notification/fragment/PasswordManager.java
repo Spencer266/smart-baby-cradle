@@ -42,36 +42,30 @@ public class PasswordManager extends Fragment {
                 tmpCurrentPassword,
                     tmpNewPassword,
                     () -> {
-                        Log.i("ChangePassword", "Updated password successfully!");
+                        Log.i("changePassword", "Updated password successfully!");
 
-                        try {
-                            getActivity().runOnUiThread(() -> Toast.makeText(
-                                    getActivity(),
-                                    "Updated password successfully!",
-                                    Toast.LENGTH_SHORT
-                            ));
-                        } catch (NullPointerException e) {
-                            Log.e("ChangePassword", "Can not show toast message", e);
-                        }
-
+                        ToastMessage.showToastMessage(
+                                getActivity(),
+                                "Updated password successfully!",
+                                "changePassword");
                     },
                     error -> {
-                        Log.e("ChangePassword", "Could not update password: " + error);
+                        Log.e("changePassword", "Could not update password: " + error);
 
-                        try {
-                            getActivity().runOnUiThread(() -> Toast.makeText(
-                                    getActivity(),
-                                    error.getCause().toString(),
-                                    Toast.LENGTH_SHORT).show()
-                            );
-                        } catch (NullPointerException e) {
-                            Log.e("ChangePassword", "Can not show toast message", e);
-                        }
+                        ToastMessage.showToastMessage(
+                                getActivity(),
+                                error.getCause().toString(),
+                                "changePassword"
+                        );
                     }
             );
         } else {
-            Log.i("ChangePassword", "New password and confirm new password do not match!");
-            Toast.makeText(getContext(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+            Log.i("changePassword", "New password and confirm new password do not match!");
+            ToastMessage.showToastMessage(
+                    getActivity(),
+                    "New password and confirm password do not match",
+                    "ChangePassword"
+            );
         }
     }
 
