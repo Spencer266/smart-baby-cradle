@@ -1,6 +1,6 @@
 # Gateway Source code
-Hardware: Raspberry Pi 4 Model B 4GB RAM__
-OS: Raspberry Pi OS 64 bit__
+Hardware: Raspberry Pi 4 Model B 4GB RAM <br>
+OS: Raspberry Pi OS 64 bit <br>
 <br>
 Features:__
 * BLE commnunication
