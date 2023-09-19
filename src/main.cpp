@@ -9,6 +9,9 @@ HeartRateSensor HeartRate;
 #include "BLE.hpp"
 BLEManager BLE;
 
+#include "SpO2.hpp"
+SpO2Sensor SpO2;
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -17,6 +20,8 @@ void setup()
   HeartRate.begin();
 
   Temperature.begin();
+
+  // SpO2.begin();
 
   BLE.begin();
   Serial.println("Characteristics defined!");
@@ -29,9 +34,14 @@ void loop()
   HeartRate.update();
   float heartRate = HeartRate.getHeartRate();
 
-  int oxy = 80;
+  // SpO2.update();
+  // int spO2 = SpO2.getSpO2();
+  // float temperature = SpO2.getTemperatureC();
+  // float heartRate = SpO2.getHeartRate();
 
-  BLE.update(heartRate, temperature, oxy);
+  int spO2 = 80;
+
+  BLE.update(heartRate, temperature, spO2);
 
   Serial.print("temperature: ");
   Serial.print(temperature);
@@ -40,5 +50,5 @@ void loop()
   Serial.print(heartRate);
 
   Serial.print(", SpO2: ");
-  Serial.println(oxy);
+  Serial.println(spO2);
 }
