@@ -1,5 +1,6 @@
 package com.example.notification.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,6 +33,9 @@ public class Home extends Fragment {
     private ArrayList <String> deviceNameList, deviceIdList;
     private Spinner deviceChooser;
     private String currentDevice;
+    private LinearLayout warningBackground;
+    private ImageView statusIcon;
+    private TextView message;
     private TextView heartBeat, oxygenLevel, bodyTemperature;
     private TextView temperature, humidity, cry;
     private TextView fanSpeed, swaying, music, humidifier, acTemperature;
@@ -119,7 +125,7 @@ public class Home extends Fragment {
                     Log.i("showDeviceData", "Current device: " + currentDevice);
                     if (response.hasData()) {
                         Log.i("showDeviceData", "Have some data");
-                        int timeStamp = 0;
+                        int timeStamp = -1;
                         for (BabyData babyData : response.getData()) {
                             timeStamp = Math.max(timeStamp, babyData.getTimestamp());
                         }
@@ -128,13 +134,73 @@ public class Home extends Fragment {
                                 displayBabyData(babyData);
                             }
                         }
+                        if (timeStamp == -1) {
+                            displayDefaultBabyData();
+                        }
                     }
                 },
                 error -> Log.i("showDeviceData", "Something went wrong", error)
         );
     }
 
-    public void displayBabyData(BabyData babyData) {
+    private void displayStatus(int id, String color, String currentMessage) {
+        statusIcon.setImageResource(id);
+        warningBackground.setBackgroundColor(Color.parseColor(color));
+        message.setText(currentMessage);
+    }
+
+    private void displayDefaultBabyData() {
+        Log.i("Home", "Calling displayDefaultBabyData");
+        getActivity().runOnUiThread(() -> {
+            heartBeat.setText("No data");
+            oxygenLevel.setText("No data");
+            bodyTemperature.setText("No data");
+            temperature.setText("No data");
+            humidity.setText("No data");
+            cry.setText("No data");
+            fanSpeed.setText("No data");
+            swaying.setText("No data");
+            music.setText("No data");
+            humidifier.setText("No data");
+            acTemperature.setText("No data");
+        });
+
+        displayStatus(R.drawable.ic_ok_sign, "#00ff00", "Nothing to show!");
+    }
+
+    private void handleMessage(BabyData babyData) {
+        Log.i("Home", "Calling handleMessage");
+        ArrayList<String> warning = new ArrayList<>();
+
+        if (babyData.getBracelet().getTemperature() <= 36) {
+            warning.add("Low body temperature");
+        } else if (babyData.getBracelet().getTemperature() >= 37.5) {
+            warning.add("High body temperature");
+        }
+
+        if (babyData.getBracelet().getHeartBeats() > 160) {
+            warning.add("High heart beats");
+        } else if (babyData.getBracelet().getHeartBeats() >= 70 && babyData.getBracelet().getHeartBeats() < 120) {
+            warning.add("Low heart beats");
+        }
+
+        if (babyData.getBracelet().getOxygen() < 90) {
+            warning.add("Low oxygen saturation");
+        }
+
+        if (warning.size() == 0) {
+            displayStatus(R.drawable.ic_ok_sign, "#00ff00", "Baby health is good!");
+        } else {
+            String warningMessage = "Something is wrong with baby!";
+            for (int i = 0; i < warning.size(); i++) {
+                warningMessage += "\n";
+                warningMessage += warning.get(i);
+            }
+            displayStatus(R.drawable.ic_tention_sign, "#ff0000", warningMessage);
+        }
+    }
+
+    private void displayBabyData(BabyData babyData) {
         Log.i("Home", "Calling displayBabyData");
 
         try {
@@ -154,6 +220,8 @@ public class Home extends Fragment {
         } catch (NullPointerException e) {
             Log.e("Home", "Failed to display baby data!", e);
         }
+
+        handleMessage(babyData);
     }
 
     public String getUserId() {
@@ -161,17 +229,20 @@ public class Home extends Fragment {
     }
 
     private void initUI() {
-        deviceChooser   = View.findViewById(R.id.Home_deviceChooser);
-        heartBeat       = View.findViewById(R.id.Home_heartRate);
-        oxygenLevel     = View.findViewById(R.id.Home_oxygenLevel);
-        bodyTemperature = View.findViewById(R.id.Home_bodyTemperature);
-        temperature     = View.findViewById(R.id.Home_temperature);
-        humidity        = View.findViewById(R.id.Home_humidity);
-        cry             = View.findViewById(R.id.Home_cry);
-        fanSpeed        = View.findViewById(R.id.Home_fanSpeed);
-        swaying         = View.findViewById(R.id.Home_swaying);
-        music           = View.findViewById(R.id.Home_music);
-        humidifier      = View.findViewById(R.id.Home_humidifier);
-        acTemperature   = View.findViewById(R.id.Home_ac_temperature);
+        deviceChooser     = View.findViewById(R.id.Home_deviceChooser);
+        heartBeat         = View.findViewById(R.id.Home_heartRate);
+        oxygenLevel       = View.findViewById(R.id.Home_oxygenLevel);
+        bodyTemperature   = View.findViewById(R.id.Home_bodyTemperature);
+        temperature       = View.findViewById(R.id.Home_temperature);
+        humidity          = View.findViewById(R.id.Home_humidity);
+        cry               = View.findViewById(R.id.Home_cry);
+        fanSpeed          = View.findViewById(R.id.Home_fanSpeed);
+        swaying           = View.findViewById(R.id.Home_swaying);
+        music             = View.findViewById(R.id.Home_music);
+        humidifier        = View.findViewById(R.id.Home_humidifier);
+        acTemperature     = View.findViewById(R.id.Home_acTemperature);
+        warningBackground = View.findViewById(R.id.Home_warningBackground);
+        statusIcon        = View.findViewById(R.id.Home_statusIcon);
+        message           = View.findViewById(R.id.Home_message);
     }
 }

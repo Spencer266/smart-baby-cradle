@@ -17,6 +17,32 @@
             android:layout_marginTop="30dp"
             android:spinnerMode="dropdown" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
+            android:background="#00FF00"
+            android:id="@+id/Home_warningBackground"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/Home_statusIcon"
+                android:src="@drawable/ic_ok_sign"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/Home_message"
+                android:textSize="18sp"
+                android:text="Baby is normal"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,10 +66,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -69,14 +94,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-58dp"
+                    android:layout_marginStart="-49dp"
                     android:textSize="12sp"
-                    android:text="50 beats per minute"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
@@ -103,11 +128,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-72.5dp"
+                    android:layout_marginStart="-61dp"
                     android:textSize="12sp"
-                    android:text="80%"/>
+                    android:text="No data"/>
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -117,7 +141,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -143,9 +167,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-96.5dp"
+                    android:layout_marginStart="-81dp"
                     android:textSize="12sp"
-                    android:text="37°C"/>
+                    android:text="No data"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -175,7 +199,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -201,14 +225,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-69dp"
+                    android:layout_marginStart="-58dp"
                     android:textSize="12sp"
-                    android:text="26°C"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
@@ -235,9 +259,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-49.5dp"
+                    android:layout_marginStart="-42dp"
                     android:textSize="12sp"
-                    android:text="74.3%"/>
+                    android:text="No data"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -247,7 +271,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -273,9 +297,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-18.5dp"
+                    android:layout_marginStart="-15dp"
                     android:textSize="12sp"
-                    android:text="Very loud"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
@@ -306,7 +330,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -332,14 +356,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-56.5dp"
+                    android:layout_marginStart="-46.5dp"
                     android:textSize="12sp"
-                    android:text="Off"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
@@ -366,9 +390,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-45.5dp"
+                    android:layout_marginStart="-39dp"
                     android:textSize="12sp"
-                    android:text="Off"/>
+                    android:text="No data"/>
             </LinearLayout>
 
 
@@ -379,7 +403,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -405,14 +429,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-33.5dp"
+                    android:layout_marginStart="-28.5dp"
                     android:textSize="12sp"
-                    android:text="On"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
@@ -439,9 +463,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-56dp"
+                    android:layout_marginStart="-48dp"
                     android:textSize="12sp"
-                    android:text="On"/>
+                    android:text="No data"/>
             </LinearLayout>
 
 
@@ -452,7 +476,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="15dp"
@@ -474,13 +498,13 @@
                     android:text="AC temperature"/>
 
                 <TextView
-                    android:id="@+id/Home_ac_temperature"
+                    android:id="@+id/Home_acTemperature"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="30dp"
-                    android:layout_marginStart="-85dp"
+                    android:layout_marginStart="-72dp"
                     android:textSize="12sp"
-                    android:text="24°C"/>
+                    android:text="No data"/>
 
             </LinearLayout>
 
