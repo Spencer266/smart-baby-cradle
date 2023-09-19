@@ -13,10 +13,16 @@
         android:theme="@style/Theme.Notification"
         tools:targetApi="31">
         <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VerifyActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignUp"
             android:exported="false" />
         <activity
-            android:name=".SignInAcitivity"
+            android:name=".SignInActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

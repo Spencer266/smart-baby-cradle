@@ -10,150 +10,245 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
+import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
+import com.amplifyframework.auth.cognito.result.GlobalSignOutError;
+import com.amplifyframework.auth.cognito.result.HostedUIError;
+import com.amplifyframework.auth.cognito.result.RevokeTokenError;
+import com.amplifyframework.core.Amplify;
+import com.example.notification.fragment.DeviceManager;
+import com.example.notification.fragment.PasswordManager;
 import com.example.notification.fragment.History;
 import com.example.notification.fragment.Home;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout mdrawerLayout;
-    private TextView txt;
-
+    private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_HISTORY = 1;
+    private static final int FRAGMENT_ADDING_DEVICE = 2;
+    private static final int FRAGMENT_CHANGE_PASSWORD = 3;
     private int currentFragment = FRAGMENT_HOME;
 
-    private ImageView img_avatar;
-    private TextView txt_name, txt_email;
+    private ImageView userAvatar;
+    private TextView username, userEmail;
+    private static String userId;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("MainActivity", "Calling onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        txt = findViewById(R.id.getData);
-//    // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("firstName");
-//    // Write data
-//    //    myRef.setValue("Mai Hoang Tung");
-//
-//    // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                txt.setText(value);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
-        initial();
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        mdrawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        mdrawerLayout.addDrawerListener(toogle);
-        toogle.syncState();
+        initUI();
+        setupToolbar();
 
-
-
-        replaceFragment(new Home());
-        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+        navigationView.getMenu().findItem(R.id.MainActivity_nav_home).setChecked(true);
         showUserInformation();
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Log.i("MainActivity", "Calling onNavigationItemSelected");
         int id = item.getItemId();
-        if (id == R.id.nav_home) {
-            if (currentFragment != FRAGMENT_HOME) {
-                replaceFragment(new Home());
-                currentFragment = FRAGMENT_HOME;
+        Log.i("MainActivity", "Choosing item: " + id);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (id == R.id.MainActivity_nav_home) {
+                    if (currentFragment != FRAGMENT_HOME) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userId", getUserId());
+                        Home nextFragment = new Home();
+                        nextFragment.setArguments(bundle);
+                        replaceFragment(nextFragment);
+                        currentFragment = FRAGMENT_HOME;
+                    }
+                }
+                else if (id == R.id.MainActivity_nav_adding_device) {
+                    if (currentFragment != FRAGMENT_ADDING_DEVICE) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("userId", getUserId());
+                        DeviceManager nextFragment = new DeviceManager();
+                        nextFragment.setArguments(bundle);
+                        replaceFragment(nextFragment);
+                        currentFragment = FRAGMENT_ADDING_DEVICE;
+                    }
+                }
+                else if (id == R.id.MainActivity_nav_history) {
+                    if (currentFragment != FRAGMENT_HISTORY) {
+                        replaceFragment(new History());
+                        currentFragment = FRAGMENT_HISTORY;
+                    }
+                }
+                else if(id == R.id.MainActivity_nav_change_password) {
+                    if (currentFragment != FRAGMENT_CHANGE_PASSWORD) {
+                        replaceFragment(new PasswordManager());
+                        currentFragment = FRAGMENT_CHANGE_PASSWORD;
+                    }
+                }
             }
-        } else if (id == R.id.nav_history) {
-            if (currentFragment != FRAGMENT_HISTORY) {
-                replaceFragment(new History());
-                currentFragment = FRAGMENT_HISTORY;
-            }
-        } else if(id == R.id.nav_signOut){
-            FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(this, SignInAcitivity.class);
+        });
+
+        if(id == R.id.MainActivity_nav_signOut){
+            signOut();
+
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
             startActivity(intent);
             finish();
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
 
-        mdrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-        @Override
-        public void onBackPressed () {
-            if (mdrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mdrawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
-        }
+    @Override
+    public void onBackPressed () {
+        Log.i("MainActivity", "Calling onBackPressed");
 
-        public void replaceFragment (Fragment fragment){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_frame, fragment);
-            transaction.commit();
-        }
-        public void initial(){
-            navigationView = findViewById(R.id.navigation_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            img_avatar = navigationView.getHeaderView(0).findViewById(R.id.image_avatar);
-            txt_name = navigationView.getHeaderView(0).findViewById(R.id.txt_name);
-            txt_email = navigationView.getHeaderView(0).findViewById(R.id.txt_email);
-        }
-
-        public void showUserInformation(){
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if(user == null){
-                return;
-            }
-            else{
-                String name = user.getDisplayName();
-                String email = user.getEmail();
-                Uri image = user.getPhotoUrl();
-                if(name == null){
-                    txt_name.setVisibility(View.GONE);
-                }
-                else{
-                    txt_name.setVisibility(View.VISIBLE);
-                    txt_name.setText(name);
-                }
-                txt_email.setText(email);
-                Glide.with(this).load(image).error(R.drawable.ic_launcher_foreground).into(img_avatar);
-            }
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
+
+    private void replaceFragment (Fragment fragment){
+        Log.i("MainActivity", "Calling replaceFragment");
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.MainActivity_contentFrame, fragment);
+        transaction.commit();
+    }
+
+    private void showUserInformation(){
+        Log.i("MainActivity", "Calling showUserInformation");
+
+        Amplify.Auth.fetchAuthSession(
+            result -> {
+                AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
+                switch (cognitoAuthSession.getIdentityIdResult().getType()) {
+                    case SUCCESS: {
+                        Log.i(
+                            "getUserInformation",
+                            "Successfully retrieved data!"
+                        );
+
+                        Amplify.Auth.getCurrentUser(
+                                authUser -> {
+                                    Log.i("getCurrentUser", authUser.getUsername());
+                                    String currentUserEmail = authUser.getUsername(), currentUsername = "";
+                                    userId = authUser.getUserId();
+                                    for (int i = 0; i < currentUserEmail.length(); i++) {
+                                        if (currentUserEmail.charAt(i) == '@') {
+                                            break;
+                                        }
+                                        currentUsername += currentUserEmail.charAt(i);
+                                    }
+                                    username.setText(currentUsername);
+                                    userEmail.setText(currentUserEmail);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("userId", authUser.getUserId());
+                                    Home nextFragment = new Home();
+                                    nextFragment.setArguments(bundle);
+                                    replaceFragment(nextFragment);
+                                },
+                                error -> Log.e("getCurrentUser", "Something is not right?", error)
+                        );
+                        break;
+                    }
+                    case FAILURE: {
+                        Log.i(
+                            "getUserInformation",
+                            "Unsuccessfully retrieved data!"
+                        );
+                        break;
+                    }
+                }
+            },
+            error -> {
+                Log.e(
+                    "getUserInformation",
+                    "Error while fetching userdata: " + error
+                );
+            }
+        );
+    }
+
+    private void setupToolbar() {
+        Log.i("MainActivity", "Calling setupToolbar");
+        Toolbar toolbar = findViewById(R.id.MainActivity_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void signOut() {
+        Log.i("MainActivity", "Calling signOut");
+
+        Amplify.Auth.signOut(signOutResult -> {
+           if (signOutResult instanceof AWSCognitoAuthSignOutResult.CompleteSignOut) {
+               Log.i("SignOut", "Successfully signed out!");
+           } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.PartialSignOut) {
+               Log.i("SignOut", "Partial signed out!");
+
+               AWSCognitoAuthSignOutResult.PartialSignOut partialSignOutResult
+                       = (AWSCognitoAuthSignOutResult.PartialSignOut) signOutResult;
+
+               HostedUIError hostedUIError
+                       = partialSignOutResult.getHostedUIError();
+
+               if (hostedUIError != null) {
+                   Log.e("SignOut", "HostedUIError: " + hostedUIError, hostedUIError.getException());
+               }
+
+               GlobalSignOutError globalSignOutError
+                       = partialSignOutResult.getGlobalSignOutError();
+               if (globalSignOutError != null) {
+                   Log.e("SignOut", "GlobalSignOutError: " + globalSignOutError, globalSignOutError.getException());
+               }
+
+               RevokeTokenError revokeTokenError
+                       = partialSignOutResult.getRevokeTokenError();
+               if (revokeTokenError != null) {
+                   Log.e("SignOut", "RevokeTokenError: " + revokeTokenError, revokeTokenError.getException());
+               }
+
+           } else if (signOutResult instanceof AWSCognitoAuthSignOutResult.FailedSignOut) {
+                AWSCognitoAuthSignOutResult.FailedSignOut failedSignOut
+                        = (AWSCognitoAuthSignOutResult.FailedSignOut) signOutResult;
+                Log.e("SignOut", "FailedSignOut: " + failedSignOut, failedSignOut.getException());
+           }
+        });
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    private void initUI(){
+        Log.i("MainActivity", "Calling initial");
+
+        navigationView = findViewById(R.id.MainActivity_navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+        userAvatar     = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userAvatar);
+        username       = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_username);
+        userEmail      = navigationView.getHeaderView(0).findViewById(R.id.MainActivity_NavigationView_userEmail);
+        drawerLayout   = findViewById(R.id.MainActivity_drawer_layout);
+    }
+}

@@ -8,13 +8,13 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_avatar"
+        android:id="@+id/MainActivity_NavigationView_userAvatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/cradle_icon"/>
 
     <TextView
-        android:id="@+id/txt_name"
+        android:id="@+id/MainActivity_NavigationView_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User"
@@ -25,7 +25,7 @@
         />
 
     <TextView
-        android:id="@+id/txt_email"
+        android:id="@+id/MainActivity_NavigationView_userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User@gmail.com"

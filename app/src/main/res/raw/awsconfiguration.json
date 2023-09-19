@@ -1,0 +1,58 @@
+{
+    "UserAgent": "aws-amplify-cli/0.1.0",
+    "Version": "0.1.0",
+    "IdentityManager": {
+        "Default": {}
+    },
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "ap-northeast-2:6115979d-fbea-4ccd-adbd-f206e94481e1",
+                "Region": "ap-northeast-2"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "ap-northeast-2_tuzrakCQd",
+            "AppClientId": "54gp1dlc6jvohud3lfpn3ebvoq",
+            "Region": "ap-northeast-2"
+        }
+    },
+    "Auth": {
+        "Default": {
+            "authenticationFlowType": "USER_SRP_AUTH",
+            "socialProviders": [],
+            "usernameAttributes": [],
+            "signupAttributes": [
+                "EMAIL"
+            ],
+            "passwordProtectionSettings": {
+                "passwordPolicyMinLength": 8,
+                "passwordPolicyCharacters": []
+            },
+            "mfaConfiguration": "OFF",
+            "mfaTypes": [
+                "SMS"
+            ],
+            "verificationMechanisms": [
+                "EMAIL"
+            ]
+        }
+    },
+    "AppSync": {
+        "Default": {
+            "ApiUrl": "https://eg37nmeijnd37ke53ictyoy7vq.appsync-api.ap-northeast-2.amazonaws.com/graphql",
+            "Region": "ap-northeast-2",
+            "AuthMode": "API_KEY",
+            "ApiKey": "da2-r7z35epw55cr7pfwmytcwerpxe",
+            "ClientDatabasePrefix": "smartgradle_API_KEY"
+        },
+        "smartgradle_AMAZON_COGNITO_USER_POOLS": {
+            "ApiUrl": "https://eg37nmeijnd37ke53ictyoy7vq.appsync-api.ap-northeast-2.amazonaws.com/graphql",
+            "Region": "ap-northeast-2",
+            "AuthMode": "AMAZON_COGNITO_USER_POOLS",
+            "ClientDatabasePrefix": "smartgradle_AMAZON_COGNITO_USER_POOLS"
+        }
+    }
+}

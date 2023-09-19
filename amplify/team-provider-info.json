@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-smartgradle-dev-111801-authRole",
+      "UnauthRoleArn": "arn:aws:iam::855454787617:role/amplify-smartgradle-dev-111801-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::855454787617:role/amplify-smartgradle-dev-111801-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-smartgradle-dev-111801-deployment",
+      "UnauthRoleName": "amplify-smartgradle-dev-111801-unauthRole",
+      "StackName": "amplify-smartgradle-dev-111801",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:855454787617:stack/amplify-smartgradle-dev-111801/0e64bb20-416c-11ee-84f8-06848345d0d0",
+      "AmplifyAppId": "d2eoe0urf7gzh4"
+    },
+    "categories": {
+      "auth": {
+        "smartgradle4672367b": {}
+      },
+      "api": {
+        "smartgradle": {}
+      },
+      "function": {
+        "smartgradledc221f1f": {}
+      }
+    }
+  }
+}
