@@ -14,9 +14,9 @@ void setup()
   // put your setup code here, to run once:
   Serial.begin(115200);
 
-  Temperature.begin();
-  
   HeartRate.begin();
+
+  Temperature.begin();
 
   BLE.begin();
   Serial.println("Characteristics defined!");
@@ -25,9 +25,20 @@ void setup()
 void loop()
 {
   float temperature = Temperature.readTemperatureC();
-  int heartRate = HeartRate.getAverageHeartRate();
+
+  HeartRate.update();
+  float heartRate = HeartRate.getHeartRate();
 
   int oxy = 80;
 
-  BLE.update(temperature, heartRate, oxy);
+  BLE.update(heartRate, temperature, oxy);
+
+  Serial.print("temperature: ");
+  Serial.print(temperature);
+
+  Serial.print(", BPM: ");
+  Serial.print(heartRate);
+
+  Serial.print(", SpO2: ");
+  Serial.println(oxy);
 }

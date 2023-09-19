@@ -19,7 +19,7 @@ void TemperatureSensor::begin()
 
     // The LEDs are very low power and won't affect the temp reading much but
     // you may want to turn off the LEDs to avoid any local heating
-    particleSensor.setup(0); // Configure sensor. Turn off LEDs
+    // particleSensor.setup(0); // Configure sensor. Turn off LEDs
 
     particleSensor.enableDIETEMPRDY(); // Enable the temp ready interrupt. This is required.
 }

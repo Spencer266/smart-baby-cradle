@@ -17,7 +17,7 @@ class BLEManager
 public:
     BLEManager();
     void begin();
-    void update(int beatsPerMinute, float temperature,int oxy);
+    void update(float beatsPerMinute, float temperature,int oxy);
 
 private:
     BLECharacteristic *pBPM_Char;

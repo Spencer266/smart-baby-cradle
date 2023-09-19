@@ -53,7 +53,7 @@ void BLEManager::setupBLE()
     
 }
 
-void BLEManager::update(int beatsPerMinute, float temperature,int oxy)
+void BLEManager::update(float beatsPerMinute, float temperature,int oxy)
 {
     if (millis() - timeSend > 5000)
     {
