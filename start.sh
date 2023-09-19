@@ -2,7 +2,7 @@
 
 # List of Python scripts to run in parallel
 scripts=("scripts/cloud/aws/aws_iot_mqtt.py" 
-	 "scripts/socket/node_cradle_ble.py" 
+	 "scripts/socket/node_cradle_socket.py" 
 	 "scripts/BLE/node_bracelet_ble.py")
 
 # Function to run a Python script in the background

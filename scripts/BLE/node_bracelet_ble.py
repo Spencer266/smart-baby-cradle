@@ -1,6 +1,6 @@
 # importing libraries
 import sys
-sys.path.insert(0, '../bluetooth')
+sys.path.append('scripts/bluetooth')
 
 from multiprocessing.connection import Client
 import bluetooth_gatt
@@ -13,7 +13,7 @@ import json
 import struct
 
 # Defines constants
-DEV_ADDR = "E0:5A:1B:C8:36:CE"
+DEV_ADDR = "43:D7:DC:43:19:C4" # "E0:5A:1B:C8:36:CE"
 SERVICE_UUID = "de8a5aac-a99b-c315-0c80-60d4cbb51224"
 BPM_CHAR_UUID = "5b026510-4088-c297-46d8-be6c736a087a"
 OXY_CHAR_UUID = "61a885a4-41c3-60d0-9a53-6d652a70d29c"
@@ -22,19 +22,21 @@ IPC_PORT = 6000
 
 print("-----Node BLE-----")
 
-# Connect BLE
-BLE_status = bluetooth_constants.RESULT_EXCEPTION
-while BLE_status != bluetooth_constants.RESULT_OK:
-    BLE_status = bluetooth_gap.connect(DEV_ADDR)
-    print("BLE repeat " + str(BLE_status))
-    time.sleep(1)
-print("Bracelet Connected: " + str(BLE_status))
 
-# Initialize IPC
-proc_addr = ('localhost', IPC_PORT)
-proc_conn = Client(proc_addr, authkey=b'pass')
+# Connect BLE
+def BLE_connect():
+    BLE_status = bluetooth_constants.RESULT_EXCEPTION
+    while BLE_status != bluetooth_constants.RESULT_OK:
+        BLE_status = bluetooth_gap.connect(DEV_ADDR)
+        print("BLE repeat " + str(BLE_status))
+        time.sleep(1)
+    print("Bracelet Connected: " + str(BLE_status))
+    print
+
 
 # Getting service and characteristics
+BLE_connect()
+
 services = bluetooth_gatt.get_services(DEV_ADDR)
 primary = [service for service in services if service["UUID"] == SERVICE_UUID][0]
 
@@ -44,11 +46,18 @@ oxy_char = [char for char in chars if char["UUID"] == OXY_CHAR_UUID][0]
 temp_char = [char for char in chars if char["UUID"] == TEMP_CHAR_UUID][0]
 
 
+# Initialize IPC
+proc_addr = ('localhost', IPC_PORT)
+cloud_proc_conn = Client(proc_addr, authkey=b'pass')
+
+
 data = {
     "bpm": 90,
     "oxy": 80,
     "temp": 36.8
 }
+shutdown = False
+
 
 while True:
     raw = bytes(bluetooth_gatt.read_characteristic(
@@ -65,17 +74,19 @@ while True:
 
     try:
         pack = json.dumps(data)
-        proc_conn.send(pack)
+        cloud_proc_conn.send(pack)
         
-        print("Pack sent")
+        print(data)
         time.sleep(5)
+
     except Exception as e:
         print(str(e))
+        print("Node BLE try again")
+
     except KeyboardInterrupt:
-        print("Keyboard Cancel")
-    except ConnectionResetError:
-        print("Connection reset by peer")
-    finally:
-        proc_conn.close()
+        cloud_proc_conn.close()
         bluetooth_gap.disconnect(DEV_ADDR)
+        shutdown = True
+        print("Node BLE shutdown!")
         break
+        

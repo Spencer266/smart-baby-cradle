@@ -75,13 +75,13 @@ print("Done!")
 bracelet_addr = ('localhost', 6000)
 cradle_addr = ('localhost', 6001)
 
-bracelet_lis = Listener(bracelet_addr, authkey=b'pass')
+# bracelet_lis = Listener(bracelet_addr, authkey=b'pass')
 cradle_lis = Listener(cradle_addr, authkey=b'pass')
 
 cradle_conn = cradle_lis.accept()
 print("Cradle process accepted")
-bracelet_conn = bracelet_lis.accept()
-print("Bracelet process accepted")
+# bracelet_conn = bracelet_lis.accept()
+# print("Bracelet process accepted")
 
 
 message = {
@@ -101,13 +101,13 @@ message = {
 while True:
     try:
         # Get data from bracelet process
-        if bracelet_conn.closed:
-            print('Reconnecting to bracelet process...')
-            bracelet_conn = bracelet_lis.accept()
-            print("Bracelet process accepted")
-        while not bracelet_conn.readable:
-            pass
-        bracelet_msg = bracelet_conn.recv()
+        # if bracelet_conn.closed:
+        #     print('Reconnecting to bracelet process...')
+        #     bracelet_conn = bracelet_lis.accept()
+        #     print("Bracelet process accepted")
+        # while not bracelet_conn.readable:
+        #     pass
+        # bracelet_msg = bracelet_conn.recv()
 
 
         # Get data from cradle process
@@ -121,7 +121,7 @@ while True:
 
 
         # Prepare data for publishing
-        message["bracelet"] = json.loads(bracelet_msg)
+        # message["bracelet"] = json.loads(bracelet_msg)
         message["cradle"] = json.loads(cradle_msg)
 
         message_json = json.dumps(message)
@@ -135,17 +135,12 @@ while True:
         )
         print(f"Message published")
 
-        time.sleep(5)
-
     except Exception as e:
         print(str(e))
 
     except KeyboardInterrupt:
-        pass
-
-    finally:
-        bracelet_conn.close()
-        bracelet_lis.close()
+        # bracelet_conn.close()
+        # bracelet_lis.close()
 
         cradle_conn.close()
         cradle_lis.close()

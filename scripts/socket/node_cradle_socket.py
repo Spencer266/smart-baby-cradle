@@ -31,6 +31,8 @@ cloud_proc_conn = Client(cloud_proc_addr, authkey=b'pass')
 # Cry machine learning model setup
 predictor = Predictor()
 
+shutdown = False
+
 
 while True:
     try:
@@ -62,3 +64,12 @@ while True:
     except KeyboardInterrupt:
         cloud_proc_conn.close()
         client_socket.close()
+        shutdown = True
+        print("Node Socket shutdown!")
+        break
+
+    except Exception as e:
+        print(str(e))
+        print("Node Socket try again")
+            
+            

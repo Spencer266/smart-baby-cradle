@@ -13,7 +13,7 @@ import audio_utils
 
 RATE = 44100
 FRAME = 512
-FILE_PATH = '../../data/FTP/files/record.wav'
+FILE_PATH = 'data/FTP/files/record.wav'
 
 
 
