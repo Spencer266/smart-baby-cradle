@@ -1,6 +1,11 @@
 # Gateway Source code
-Hardware: Raspberry Pi 4 Model B 4GB RAM
-OS: Raspberry Pi OS 64 bit
+Hardware: Raspberry Pi 4 Model B 4GB RAM__
+OS: Raspberry Pi OS 64 bit__
+<br>
+Features:__
+* BLE commnunication
+* Access Point setup with Internet connection
+* FTP protocol available
 
 Main script categories:
 1. BLE
