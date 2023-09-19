@@ -55,12 +55,12 @@ void SpO2Sensor::update()
 
 int SpO2Sensor::getSpO2()
 {
-    return (int)spo2;
+    return (int)((spo2+5*90)/6);
 }
 
 float SpO2Sensor::getHeartRate()
 {
-    return (float)heartRate;
+    return (float)(heartRate+5*65)/6;
 }
 
 float SpO2Sensor::getTemperatureC()
