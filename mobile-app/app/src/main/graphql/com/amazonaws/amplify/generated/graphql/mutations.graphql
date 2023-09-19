@@ -1,0 +1,166 @@
+# this is an auto generated file. This will be overwritten
+
+mutation CreateBabyData(
+  $input: CreateBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  createBabyData(input: $input, condition: $condition) {
+    deviceId
+    timestamp
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation UpdateBabyData(
+  $input: UpdateBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  updateBabyData(input: $input, condition: $condition) {
+    deviceId
+    timestamp
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation DeleteBabyData(
+  $input: DeleteBabyDataInput!
+  $condition: ModelBabyDataConditionInput
+) {
+  deleteBabyData(input: $input, condition: $condition) {
+    deviceId
+    timestamp
+    bracelet {
+      heartBeats
+      oxygen
+      temperature
+      __typename
+    }
+    cradle {
+      environmentTemp
+      humidity
+      cry
+      __typename
+    }
+    controller {
+      fanSpeed
+      swaying
+      playingMusic
+      humidifier
+      acTemp
+      __typename
+    }
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation CreateUserDevice(
+  $input: CreateUserDeviceInput!
+  $condition: ModelUserDeviceConditionInput
+) {
+  createUserDevice(input: $input, condition: $condition) {
+    userID
+    deviceId
+    mappingName
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation UpdateUserDevice(
+  $input: UpdateUserDeviceInput!
+  $condition: ModelUserDeviceConditionInput
+) {
+  updateUserDevice(input: $input, condition: $condition) {
+    userID
+    deviceId
+    mappingName
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+
+mutation DeleteUserDevice(
+  $input: DeleteUserDeviceInput!
+  $condition: ModelUserDeviceConditionInput
+) {
+  deleteUserDevice(input: $input, condition: $condition) {
+    userID
+    deviceId
+    mappingName
+    id
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/rounded_corner.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#4C0099" /> <!-- Màu nền của item -->
+    <corners android:radius="8dp" /> <!-- Độ cong của đường bo -->
+</shape>

@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "smartgradle",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authsmartgradle4672367b",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-smartgradle-dev-111801-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/8b2b3e7d01e42c2cf354594b3d0facbe42ba6a67"
+}

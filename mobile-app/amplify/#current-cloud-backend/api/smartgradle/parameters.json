@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "smartgradle",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-09-03T02:23:40.384Z",
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authsmartgradle4672367b",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

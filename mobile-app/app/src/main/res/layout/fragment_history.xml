@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/History_deviceID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Device ID (String!)"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/History_timestamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Timestamp (Int!)"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/History_heartBeats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Heart Beats (Float)"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/History_oxygen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Oxygen Level (Float)"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/History_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Temperature (Float)"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/History_environmentTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Environment Temp (Float)"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/History_humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Humidity (Float)"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/History_cry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cry (String)"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/History_fanSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fan speed (String)"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/History_swaying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Swaying (String)"
+            android:inputType="text"/>
+
+        <CheckBox
+            android:id="@+id/History_playingMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Playing Music?"/>
+
+        <CheckBox
+            android:id="@+id/History_humidifier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Humidifier?"/>
+
+
+        <EditText
+            android:id="@+id/History_acTemp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="AC Temperature (Float)"
+            android:inputType="numberDecimal"/>
+
+        <Button
+            android:id="@+id/History_pushButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Push"
+            />
+    </LinearLayout>
+
+</ScrollView>
