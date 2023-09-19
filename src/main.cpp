@@ -29,17 +29,19 @@ void setup()
 
 void loop()
 {
-  float temperature = Temperature.readTemperatureC();
+  // float temperature = Temperature.readTemperatureC();
 
-  HeartRate.update();
-  float heartRate = HeartRate.getHeartRate();
+  // HeartRate.update();
+  // float heartRate = HeartRate.getHeartRate();
+  // int spO2 = 80;
 
-  // SpO2.update();
-  // int spO2 = SpO2.getSpO2();
-  // float temperature = SpO2.getTemperatureC();
-  // float heartRate = SpO2.getHeartRate();
 
-  int spO2 = 80;
+  SpO2.update();
+  float temperature = SpO2.getTemperatureC();
+  float heartRate = SpO2.getHeartRate();
+  int spO2 = SpO2.getSpO2();
+
+
 
   BLE.update(heartRate, temperature, spO2);
 
