@@ -21,7 +21,7 @@ void setup()
 
   Temperature.begin();
 
-  // SpO2.begin();
+  SpO2.begin();
 
   BLE.begin();
   Serial.println("Characteristics defined!");
@@ -36,10 +36,10 @@ void loop()
   int spO2 = 80;
 
 
-  // SpO2.update();
+  SpO2.update();
   // float temperature = SpO2.getTemperatureC();
   // float heartRate = SpO2.getHeartRate();
-  // int spO2 = SpO2.getSpO2();
+  int spO2 = SpO2.getSpO2();
 
   BLE.update(heartRate, temperature, spO2);
 
