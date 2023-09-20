@@ -163,9 +163,8 @@ public class Home extends Fragment {
             music.setText("No data");
             humidifier.setText("No data");
             acTemperature.setText("No data");
+            displayStatus(R.drawable.ic_ok_sign, "#ffff00", "Nothing to show!");
         });
-
-        displayStatus(R.drawable.ic_ok_sign, "#00ff00", "Nothing to show!");
     }
 
     private void handleMessage(BabyData babyData) {
@@ -189,7 +188,7 @@ public class Home extends Fragment {
         }
 
         if (warning.size() == 0) {
-            displayStatus(R.drawable.ic_ok_sign, "#00ff00", "Baby health is good!");
+            displayStatus(R.drawable.ic_ok_sign, "#00ff00", "Baby is good!");
         } else {
             String warningMessage = "Something is wrong with baby!";
             for (int i = 0; i < warning.size(); i++) {
@@ -211,17 +210,11 @@ public class Home extends Fragment {
                 temperature.setText(String.format(Locale.getDefault(), "%.2f", babyData.getCradle().getEnvironmentTemp()));
                 humidity.setText(String.format(Locale.getDefault(), "%.2f", babyData.getCradle().getHumidity()));
                 cry.setText(babyData.getCradle().getCry());
-                fanSpeed.setText(babyData.getController().getFanSpeed());
-                swaying.setText(babyData.getController().getSwaying());
-                music.setText(babyData.getController().getPlayingMusic().toString());
-                humidifier.setText(babyData.getController().getHumidifier().toString());
-                acTemperature.setText(String.format(Locale.getDefault(), "%.2f", babyData.getController().getAcTemp()));
+                handleMessage(babyData);
             });
         } catch (NullPointerException e) {
             Log.e("Home", "Failed to display baby data!", e);
         }
-
-        handleMessage(babyData);
     }
 
     public String getUserId() {

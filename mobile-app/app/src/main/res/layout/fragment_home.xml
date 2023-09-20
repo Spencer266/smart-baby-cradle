@@ -40,7 +40,7 @@
                 android:layout_marginTop="12dp"
                 android:id="@+id/Home_message"
                 android:textSize="18sp"
-                android:text="Baby is normal"/>
+                android:text="Nothing to show"/>
         </LinearLayout>
 
         <LinearLayout
